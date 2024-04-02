@@ -1,6 +1,8 @@
 package org.main;
 
 import io.javalin.apibuilder.EndpointGroup;
+import org.main.ressources.Role;
+import org.main.ressources.User;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 

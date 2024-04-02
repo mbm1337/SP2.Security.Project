@@ -1,4 +1,4 @@
-package org.main;
+package org.main.HibernateConfig;
 
 
 
@@ -10,6 +10,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.main.ressources.Role;
+import org.main.ressources.User;
 
 
 import java.util.Properties;

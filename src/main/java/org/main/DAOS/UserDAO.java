@@ -1,9 +1,9 @@
-package org.main;
+package org.main.DAOS;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
+import org.main.ressources.User;
 
-import java.util.Collection;
 import java.util.List;
 
 public class UserDAO {

@@ -1,4 +1,4 @@
-package org.main;
+package org.main.ressources;
 
 import jakarta.persistence.*;
 import lombok.*;
