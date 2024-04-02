@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.main</groupId>
-    <artifactId>SP2.Security.Project</artifactId>
+    <groupId>org.example</groupId>
+    <artifactId>Javalin_demo_td</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -16,11 +16,10 @@
         <hamcrest.version>2.0.0.0</hamcrest.version>
         <restassured.version>5.3.0</restassured.version>
         <hibernate.version>6.2.4.Final</hibernate.version>
-        <postgresql.version>42.6.0</postgresql.version>
         <db.name>todelete</db.name>
-        <nimbus.version>9.10</nimbus.version>
-    </properties>
 
+
+    </properties>
     <dependencies>
         <dependency>
             <groupId>io.javalin</groupId>
@@ -44,10 +43,33 @@
             <version>2.15.0</version>
         </dependency>
         <dependency>
+            <!--  https://nimbusds.com/products/nimbus-jose-jwt   -->
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>9.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>9.10</version> <!-- or the latest version -->
+        </dependency>
+
+        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>java-hamcrest</artifactId>
             <version>${hamcrest.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
         </dependency>
         <!--        https://www.baeldung.com/rest-assured-tutorial-->
         <dependency>
@@ -56,6 +78,17 @@
             <version>${restassured.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>json-schema-validator</artifactId>
@@ -81,28 +114,6 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <!--        &lt;!&ndash;        https://www.postgresqltutorial.com/postgresql-getting-started/&ndash;&gt;-->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mindrot</groupId>
-            <artifactId>jbcrypt</artifactId>
-            <version>0.4</version>
-        </dependency>
-        <dependency>
-            <groupId>com.nimbusds</groupId>
-            <artifactId>nimbus-jose-jwt</artifactId>
-            <version>${nimbus.version}</version>
-        </dependency>
-
     </dependencies>
 
 </project>
