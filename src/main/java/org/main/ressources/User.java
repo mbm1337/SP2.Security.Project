@@ -30,8 +30,8 @@ public class User {
     private String password;
     @ManyToMany
     private Set<Role> roles = new HashSet<>();
-    //@ManyToMany
-    //private Set<Event> registeredEvents = new HashSet<>();
+    @ManyToMany
+    private Set<Event> registeredEvents = new HashSet<>();
 
     public User(String email, String password) {
         this.email = email;
