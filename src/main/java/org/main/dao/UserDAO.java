@@ -1,8 +1,12 @@
 package org.main.dao;
 
+import io.javalin.validation.ValidationException;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.TypedQuery;
 import org.main.ressources.User;
+import org.main.ressources.Role;
 
 import java.util.List;
 
@@ -57,5 +61,36 @@ public class UserDAO {
     }
 
 
-
+    public User createUser(String username, String password) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        User user = new User(username, password);
+        Role userRole = em.find(Role.class, "user");
+        if (userRole == null) {
+            userRole = new Role("user");
+            em.persist(userRole);
+        }
+        user.addRole(userRole);
+        em.persist(user);
+        em.getTransaction().commit();
+        em.close();
+        return user;
     }
+
+    public User getVerifiedUser(String username, String password) throws ValidationException {
+        try (EntityManager em = emf.createEntityManager()) {
+            List<User> users = em.createQuery("SELECT u FROM User u").getResultList();
+            users.stream().forEach(user -> System.out.println(user.getUsername() + " " + user.getPassword()));
+            User user = em.find(User.class, username);
+            if (user == null)
+                throw new EntityNotFoundException("No user found with username: " + username); //RuntimeException
+            user.getRoles().size(); // force roles to be fetched from db
+            if (!user.verifyPassword(password))
+                throw new ValidationException("Wrong password");
+            return user;
+        }
+    }
+
+
+
+}
