@@ -1,13 +1,12 @@
 package org.main.ressources;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -45,5 +44,12 @@ public class Event {
     @Column(name = "deletedAt")
     private LocalDateTime deletedAt;
 
+//    @ManyToMany
+//    Set<User>users = new HashSet<>();
+//
 
+    public Event(String description) {
+        this.description = description;
+    }
 }
+
