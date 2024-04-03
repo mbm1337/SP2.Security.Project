@@ -24,10 +24,6 @@ public class Main {
     public static void main(String[] args) {
 
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig();
-        var em = emf.createEntityManager();
-        UserDAO userDAO =  new UserDAO(emf);
-       User user =  userDAO.createUser("sumaia","skdk","828282","1234");
-        userDAO.createUser("lara","w2o","323","3");
 
 
 
