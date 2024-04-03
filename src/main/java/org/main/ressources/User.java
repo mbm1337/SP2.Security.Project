@@ -33,6 +33,8 @@ public class User {
     @ManyToMany
     private Set<Event> registeredEvents = new HashSet<>();
 
+
+
     public User(String email, String password) {
         this.email = email;
         this.password = password;
@@ -67,6 +69,17 @@ public class User {
         return rolesAsStrings;
     }
 
+    public void addEvent(Event event) {
+        registeredEvents.add(event);
+        //event
+
+    }
+    public void removeEvent(Event event) {
+        registeredEvents.remove(event);
+
+        //event
+    }
 }
+
 
 

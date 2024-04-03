@@ -1,13 +1,12 @@
-package Handlers;
+package org.main.handlers;
 
 import Exceptions.ApiException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.http.Handler;
 
-import org.main.DAOS.UserDAO;
+import org.main.dao.UserDAO;
 import org.main.ressources.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserHandler {

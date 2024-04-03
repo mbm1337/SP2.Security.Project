@@ -1,4 +1,4 @@
-package org.main.DAOS;
+package org.main.dao;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
