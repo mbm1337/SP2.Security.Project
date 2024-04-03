@@ -44,12 +44,8 @@ public class Event {
     @Column(name = "deletedAt")
     private LocalDateTime deletedAt;
 
-//    @ManyToMany
-//    Set<User>users = new HashSet<>();
-//
+    @ManyToMany
+    Set<User>users = new HashSet<>();
 
-    public Event(String description) {
-        this.description = description;
-    }
+
 }
-
