@@ -79,6 +79,10 @@ public class User {
 
         //event
     }
+
+    public boolean verifyPassword(String pw) {
+        return BCrypt.checkpw(pw, password);
+    }
 }
 
 

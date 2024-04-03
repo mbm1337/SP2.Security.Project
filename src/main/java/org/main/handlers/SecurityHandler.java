@@ -15,6 +15,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import org.main.Exceptions.ApiException;
 import org.main.Exceptions.NotAuthorizedException;
+import org.main.HibernateConfig.HibernateConfig;
 import org.main.Utils.TokenUtils;
 import org.main.Utils.Utils;
 import org.main.dao.UserDAO;
@@ -28,8 +29,8 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
-public class SecurityHandler implements ISecurityHandler{
-    UserDAO securityDAO = new UserDAO(HibernateConfig.getEntityManagerFactory());
+public class SecurityHandler implements ISecurityHandler {
+    UserDAO securityDAO = new UserDAO(HibernateConfig.getEntityManagerFactoryConfig());
     ObjectMapper objectMapper = new ObjectMapper();
     private final String SECRET_KEY = "DetteErEnHemmeligNøgleTilAtDanneJWT_Tokensmed";
     @Override

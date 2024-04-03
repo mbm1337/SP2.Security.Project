@@ -5,13 +5,17 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.TypedQuery;
+import org.main.Exceptions.NotAuthorizedException;
 import org.main.ressources.User;
 import org.main.ressources.Role;
 
 import java.util.List;
 
 public class UserDAO {
-    EntityManagerFactory emf;
+    private EntityManagerFactory emf;
+    public UserDAO(EntityManagerFactory _emf) {
+        this.emf = _emf;
+    }
 
     public User create(User user) {
         try (var em = emf.createEntityManager()) {
@@ -77,16 +81,17 @@ public class UserDAO {
         return user;
     }
 
-    public User getVerifiedUser(String username, String password) throws ValidationException {
+    public User getVerifiedUser(String username, String password) throws NotAuthorizedException {
         try (EntityManager em = emf.createEntityManager()) {
             List<User> users = em.createQuery("SELECT u FROM User u").getResultList();
-            users.stream().forEach(user -> System.out.println(user.getUsername() + " " + user.getPassword()));
+            users.stream().forEach(user -> System.out.println(user.getName() + " " + user.getPassword()));
             User user = em.find(User.class, username);
             if (user == null)
                 throw new EntityNotFoundException("No user found with username: " + username); //RuntimeException
             user.getRoles().size(); // force roles to be fetched from db
-            if (!user.verifyPassword(password))
-                throw new ValidationException("Wrong password");
+            if (!user.verifyPassword(password)) {
+                throw new NotAuthorizedException(401, "Wrong password");
+            }
             return user;
         }
     }
