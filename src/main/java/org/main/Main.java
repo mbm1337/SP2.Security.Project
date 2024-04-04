@@ -1,23 +1,32 @@
 package org.main;
 
+import jakarta.persistence.EntityManagerFactory;
+import org.main.HibernateConfig.HibernateConfig;
+import org.main.dao.EventDAO;
+import org.main.handlers.EventHandler;
 import org.main.handlers.UserHandler;
 import io.javalin.apibuilder.EndpointGroup;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class Main {
+
+
     public static void main(String[] args) {
     }
 
 
-    public static EndpointGroup getEventRoutes() {
+    public static EndpointGroup getEventRoutes(EntityManagerFactory emf) {
+
+        EventDAO eventDAO = new EventDAO(emf);
+        EventHandler eventHandler = new EventHandler(eventDAO);
         return () -> {
             path("events", () -> {
-                get("/", ctx ->{} );
-                get("/:id", ctx ->{});
-                post("/", ctx ->{});
-                put("/:id", ctx ->{});
-                delete("/:id", ctx ->{});
+                get("/", eventHandler.getAll());
+                get("/:id", eventHandler.getById());
+                post("/", eventHandler.create());
+                put("/:id", eventHandler.update());
+                delete("/:id", eventHandler.delete());
 
             });
         };
