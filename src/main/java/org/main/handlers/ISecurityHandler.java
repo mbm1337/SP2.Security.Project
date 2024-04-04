@@ -1,10 +1,9 @@
 package org.main.handlers;
 
-import DTO.UserDTO;
 import com.nimbusds.jose.JOSEException;
 import io.javalin.http.Handler;
-import org.main.Exceptions.NotAuthorizedException;
-
+import org.main.dto.UserDTO;
+import org.main.exception.NotAuthorizedException;
 import java.text.ParseException;
 import java.util.Set;
 

@@ -1,8 +1,8 @@
 POST http://localhost:7070/api/auth/register
 
 {
-"email": "admin@gmail.com",
 "name": "admin",
+"email": "admin@gmail.com",
 "password": "test123",
 "phone": "00000000"
 }
@@ -12,6 +12,6 @@ POST http://localhost:7070/api/auth/register
 POST http://localhost:7070/api/auth/login
 
 {
-"name": "admin",
+"email": "admin@gmail.com",
 "password": "test123"
 }

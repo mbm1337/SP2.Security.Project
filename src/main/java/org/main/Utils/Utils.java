@@ -1,11 +1,9 @@
 package org.main.Utils;
 
-
-import org.main.Exceptions.ApiException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import org.main.exception.ApiException;
 
      // Purpose: Utility class to read properties from a file
 public class Utils {

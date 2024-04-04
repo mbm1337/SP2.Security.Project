@@ -1,7 +1,6 @@
 package org.main.handlers;
 
-import DTO.TokenDTO;
-import DTO.UserDTO;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.nimbusds.jose.JOSEException;
@@ -11,20 +10,20 @@ import io.javalin.http.Handler;
 import io.javalin.http.HttpStatus;
 import io.javalin.validation.ValidationException;
 import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
-import org.main.Exceptions.ApiException;
-import org.main.Exceptions.NotAuthorizedException;
-import org.main.HibernateConfig.HibernateConfig;
 import org.main.Utils.TokenUtils;
 import org.main.Utils.Utils;
+import org.main.config.HibernateConfig;
 import org.main.dao.UserDAO;
+import org.main.dto.TokenDTO;
+import org.main.dto.UserDTO;
+import org.main.exception.ApiException;
+import org.main.exception.NotAuthorizedException;
 import org.main.ressources.User;
 
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
@@ -40,10 +39,10 @@ public class SecurityHandler implements ISecurityHandler {
             ObjectNode returnObject = objectMapper.createObjectNode();
             try {
                 UserDTO userInput = ctx.bodyAsClass(UserDTO.class);
-                User created = securityDAO.createUser(userInput.getName(), userInput.getPassword());
+                User created = securityDAO.createUser(userInput.getName(), userInput.getEmail(), userInput.getPhone(), userInput.getPassword());
 
                 String token = createToken(new UserDTO(created));
-                ctx.status(HttpStatus.CREATED).json(new TokenDTO(token, userInput.getName()));
+                ctx.status(HttpStatus.CREATED).json(new TokenDTO(token, userInput.getEmail()));
             } catch (EntityExistsException e) {
                 ctx.status(HttpStatus.UNPROCESSABLE_CONTENT);
                 ctx.json(returnObject.put("msg", "User already exists"));
@@ -58,9 +57,9 @@ public class SecurityHandler implements ISecurityHandler {
                 UserDTO user = ctx.bodyAsClass(UserDTO.class);
                 System.out.println("USER IN LOGIN: " + user);
 
-                User verifiedUserEntity = securityDAO.getVerifiedUser(user.getName(), user.getPassword());
+                User verifiedUserEntity = securityDAO.getVerifiedUser(user.getEmail(), user.getPassword());
                 String token = createToken(new UserDTO(verifiedUserEntity));
-                ctx.status(200).json(new TokenDTO(token, user.getName()));
+                ctx.status(200).json(new TokenDTO(token, user.getEmail()));
 
             } catch (EntityNotFoundException | ValidationException e) {
                 ctx.status(401);
@@ -186,6 +185,4 @@ public class SecurityHandler implements ISecurityHandler {
         SignedJWT jwt = SignedJWT.parse(token);
         return (int) (jwt.getJWTClaimsSet().getExpirationTime().getTime() - new Date().getTime());
     }
-
-
 }

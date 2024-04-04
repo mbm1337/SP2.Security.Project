@@ -5,7 +5,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.TypedQuery;
-import org.main.Exceptions.NotAuthorizedException;
+
+import org.main.exception.NotAuthorizedException;
 import org.main.ressources.Role;
 import org.main.ressources.User;
 
@@ -65,10 +66,10 @@ public class UserDAO  {
     }
 
 
-    public User createUser(String name, String email, String phone, String password) {
+    public User createUser(String name, String email, String password, String phone) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        User user = new User(name, email, phone, password);
+        User user = new User(name, email, password, phone);
         Role userRole = em.find(Role.class, "user");
         if (userRole == null) {
             userRole = new Role("user");

@@ -1,13 +1,14 @@
 package org.main.Utils;
 
-import DTO.UserDTO;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import org.main.Exceptions.ApiException;
-import org.main.Exceptions.NotAuthorizedException;
+
+import org.main.dto.UserDTO;
+import org.main.exception.ApiException;
+import org.main.exception.NotAuthorizedException;
 
 import java.text.ParseException;
 import java.util.Arrays;

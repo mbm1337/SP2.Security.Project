@@ -18,7 +18,6 @@ public class UserDTO {
     private String phone;
     private String password;
     private Set<String> roles;
-    private String password;
 
     public UserDTO(User user){
         this.name = user.getName();
