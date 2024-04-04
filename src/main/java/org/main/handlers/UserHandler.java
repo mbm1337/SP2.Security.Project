@@ -1,9 +1,9 @@
 package org.main.handlers;
 
-import Exceptions.ApiException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.http.Handler;
 
+import org.main.Exceptions.ApiException;
 import org.main.dao.UserDAO;
 import org.main.ressources.User;
 
