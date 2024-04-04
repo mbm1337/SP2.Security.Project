@@ -1,7 +1,4 @@
-package DTO;
-
-
-
+package org.main.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.main.ressources.User;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -22,6 +16,7 @@ public class UserDTO {
     private String name;
     private String email;
     private String phone;
+    private String password;
     private Set<String> roles;
     private String password;
 

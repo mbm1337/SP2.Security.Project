@@ -17,7 +17,8 @@ import java.util.Set;
 @Table(name = "events")
 public class Event {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @Column(name = "title")
     private String title;
     @Column(name = "description")
@@ -34,9 +35,12 @@ public class Event {
     private String location;
     @Column(name = "image")
     private String image; // ???
-
-    //@Column(name = "status")
-    private enum status {ACTIVE, INACTIVE, CANCELLED};
+    @Column(name = "status")
+    private Status status;
+    public enum Status {
+        ACTIVE,
+        INACTIVE,
+        CANCELLED};
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
     @Column(name = "updatedAt")
@@ -44,8 +48,16 @@ public class Event {
     @Column(name = "deletedAt")
     private LocalDateTime deletedAt;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.DETACH)
     Set<User>users = new HashSet<>();
 
 
+    public Event(String description) {
+        this.description = description;
+    }
+
+    
 }
+
+
+

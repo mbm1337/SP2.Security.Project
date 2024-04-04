@@ -1,17 +1,17 @@
 package org.main.dao;
 
-import io.javalin.validation.ValidationException;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.TypedQuery;
 import org.main.Exceptions.NotAuthorizedException;
-import org.main.ressources.User;
 import org.main.ressources.Role;
+import org.main.ressources.User;
 
 import java.util.List;
 
-public class UserDAO {
+public class UserDAO  {
     private EntityManagerFactory emf;
     public UserDAO(EntityManagerFactory _emf) {
         this.emf = _emf;
@@ -25,7 +25,7 @@ public class UserDAO {
         }
         return user;
     }
-
+  
     public List<User> getAll() {
         try (var em = emf.createEntityManager()) {
             TypedQuery<User> q = em.createQuery("select u FROM User  u", User.class);
@@ -36,10 +36,10 @@ public class UserDAO {
         }
     }
 
-    public User getById(int id) {
+    public User getById(String email) {
         try (var em = emf.createEntityManager()) {
-            TypedQuery<User> q = em.createQuery("FROM User h WHERE h.id = :id", User.class);
-            q.setParameter("id", id);
+            TypedQuery<User> q = em.createQuery("FROM User h WHERE h.email = :email", User.class);
+            q.setParameter("email", email);
             return q.getSingleResult();
 
 
@@ -65,10 +65,10 @@ public class UserDAO {
     }
 
 
-    public User createUser(String username, String password) {
+    public User createUser(String name, String email, String phone, String password) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        User user = new User(username, password);
+        User user = new User(name, email, phone, password);
         Role userRole = em.find(Role.class, "user");
         if (userRole == null) {
             userRole = new Role("user");
@@ -81,13 +81,13 @@ public class UserDAO {
         return user;
     }
 
-    public User getVerifiedUser(String username, String password) throws NotAuthorizedException {
+    public User getVerifiedUser(String email, String password) throws NotAuthorizedException {
         try (EntityManager em = emf.createEntityManager()) {
             List<User> users = em.createQuery("SELECT u FROM User u").getResultList();
             users.stream().forEach(user -> System.out.println(user.getName() + " " + user.getPassword()));
-            User user = em.find(User.class, username);
+            User user = em.find(User.class, email);
             if (user == null)
-                throw new EntityNotFoundException("No user found with username: " + username); //RuntimeException
+                throw new EntityNotFoundException("No user found with email: " + email); //RuntimeException
             user.getRoles().size(); // force roles to be fetched from db
             if (!user.verifyPassword(password)) {
                 throw new NotAuthorizedException(401, "Wrong password");

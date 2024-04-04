@@ -1,25 +1,24 @@
 package org.main;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.javalin.Javalin;
-import org.main.HibernateConfig.ApplicationConfig;
-import org.main.Routes.Routes;
-import org.main.handlers.UserHandler;
-import io.javalin.apibuilder.EndpointGroup;
-
-import java.util.Map;
-
-import static io.javalin.apibuilder.ApiBuilder.*;
 import static org.main.Routes.Routes.getSecuredRoutes;
 import static org.main.Routes.Routes.getSecurityRoutes;
+import static org.main.Routes.Routes.getUserRoutes;
+import static org.main.Routes.Routes.getEventRoutes;
+import jakarta.persistence.EntityManagerFactory;
+import org.main.config.HibernateConfig;
+import org.main.config.ApplicationConfig;
+
 
 public class Main {
+
+
     public static void main(String[] args) {
-        startServer(7070);
+        Main.startServer(7000);
     }
 
     public static void startServer(int port) {
         ObjectMapper om = new ObjectMapper();
+        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         ApplicationConfig applicationConfig = ApplicationConfig.getInstance();
         applicationConfig
                 .initiateServer()
@@ -27,6 +26,8 @@ public class Main {
                 .setExceptionHandling()
                 .setRoute(getSecurityRoutes())
                 .setRoute(getSecuredRoutes())
-                .checkSecurityRoles();
+                .checkSecurityRoles()
+                .setRoute(getUserRoutes(emf))
+                .setRoute(getEventRoutes(emf));
     }
 }
