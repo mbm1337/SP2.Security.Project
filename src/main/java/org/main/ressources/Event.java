@@ -56,9 +56,7 @@ public class Event {
         this.description = description;
     }
 
-
-
-
+    
 }
 
 
