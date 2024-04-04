@@ -90,7 +90,7 @@ public class UserDAO  {
             if (user == null)
                 throw new EntityNotFoundException("No user found with email: " + email); //RuntimeException
             user.getRoles().size(); // force roles to be fetched from db
-            if (!user.verifyPassword(password)) {
+            if (!user.verifyUser(password)) {
                 throw new NotAuthorizedException(401, "Wrong password");
             }
             return user;

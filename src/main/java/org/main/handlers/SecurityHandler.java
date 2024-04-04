@@ -35,7 +35,6 @@ public class SecurityHandler implements ISecurityHandler {
     @Override
     public Handler register() {
         return (ctx) -> {
-            System.out.println("Register endpoint hit");
             ObjectNode returnObject = objectMapper.createObjectNode();
             try {
                 UserDTO userInput = ctx.bodyAsClass(UserDTO.class);
