@@ -39,8 +39,9 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "name"))
     private Set<Role> roles = new HashSet<>();
-//    @ManyToMany
-//    private Set<Event> registeredEvents = new HashSet<>();
+
+    @ManyToMany
+    private Set<Event> registeredEvents = new HashSet<>();
 
 
 
