@@ -30,12 +30,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class SecurityHandler implements ISecurityHandler {
-    UserDAO securityDAO = new UserDAO(HibernateConfig.getEntityManagerFactoryConfig());
+    UserDAO securityDAO = new UserDAO(HibernateConfig.getEntityManagerFactory());
     ObjectMapper objectMapper = new ObjectMapper();
     private final String SECRET_KEY = "DetteErEnHemmeligNøgleTilAtDanneJWT_Tokensmed";
     @Override
     public Handler register() {
         return (ctx) -> {
+            System.out.println("Register endpoint hit");
             ObjectNode returnObject = objectMapper.createObjectNode();
             try {
                 UserDTO userInput = ctx.bodyAsClass(UserDTO.class);
