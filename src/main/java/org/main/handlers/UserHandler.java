@@ -32,24 +32,21 @@ public class UserHandler {
                 throw new ApiException(404, "users are not found ");
 
             } else {
-                //ObjectMapper objectMapper = new ObjectMapper();
-                //String json = objectMapper.writeValueAsString(users);
-                //ctx.json(users);
+
                 ctx.status(200).json(users);
             }
         };
     }
-    public Handler getByName(){
+    public Handler getbyId(){
         return ctx -> {
             int id  = Integer.parseInt((ctx.pathParam("id")));
             User user = userDao.getById(id);
             if (user == null) {
                 throw new ApiException( 404, "User not found");
             }
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(user);
-            ctx.result(json);
-            ctx.status(200);
+
+
+            ctx.status(200).json(id);
         };
     }
 
@@ -58,10 +55,8 @@ public class UserHandler {
             User user = ctx.bodyAsClass(User.class);
             user = userDao.registerUser(user.getName(), user.getEmail(), user.getPhone(), user.getPassword());
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(user);
-            ctx.result(json);
-            ctx.status(201);
+
+            ctx.status(201).json(user);
         };
     }
 
@@ -74,7 +69,7 @@ public class UserHandler {
                 throw new ApiException(404, "User not found");
             }
             userDao.delete(id);
-            ctx.status(204);
+            ctx.status(204).json("");
         };
     }
 
@@ -83,10 +78,7 @@ public class UserHandler {
             User user = ctx.bodyAsClass(User.class);
             user = userDao.update(user);
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(user);
-            ctx.result(json);
-            ctx.status(200);
+            ctx.status(200).json(user);
         };
     }
 
