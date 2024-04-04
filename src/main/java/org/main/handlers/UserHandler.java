@@ -13,6 +13,10 @@ public class UserHandler {
     UserDAO userDao;
     private  final ObjectMapper objectMapper = new ObjectMapper();
 
+    public UserHandler(UserDAO userDao) {
+        this.userDao = userDao;
+    }
+
     public Handler getAllUsers(){
         return ctx -> {
             List<User> users = userDao.getAll();

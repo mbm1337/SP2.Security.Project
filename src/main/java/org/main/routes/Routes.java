@@ -4,6 +4,7 @@ import io.javalin.apibuilder.EndpointGroup;
 import jakarta.persistence.EntityManagerFactory;
 import org.main.config.HibernateConfig;
 import org.main.dao.EventDAO;
+import org.main.dao.UserDAO;
 import org.main.handlers.EventHandler;
 import org.main.handlers.UserHandler;
 
@@ -28,11 +29,10 @@ public class Routes {
         };
     }
 
-    public static EndpointGroup getUserRoutes() {
-        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig();
-        var em = emf.createEntityManager();
+    public static EndpointGroup getUserRoutes(EntityManagerFactory emf){
 
-        UserHandler userHandler = new UserHandler();
+        UserDAO userDAO = new UserDAO(emf);
+        UserHandler userHandler = new UserHandler(userDAO);
         return () -> {
             path("users", () -> {
                 get(userHandler.getAllUsers());
