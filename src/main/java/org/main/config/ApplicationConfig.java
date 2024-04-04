@@ -68,7 +68,7 @@ public class ApplicationConfig {
                     handler.handle(ctx);
                     return;
                 }
-//it is hard to test method static
+                //it is hard to test method static
                 UserDTO user = ctx.attribute("user");
                 System.out.println("USER IN CHECK_SEC_ROLES: "+user);
                 if(user == null)

@@ -22,7 +22,6 @@ public class User {
     @Id
     private String email;
 
-
     @Column
     private String name;
 
