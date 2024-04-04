@@ -2,6 +2,7 @@ package org.main.ressources;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
     private Set<User> users = new HashSet<>();
 
     public Role(String name) {
@@ -33,8 +35,5 @@ public class Role {
     public String toString() {
         return "Role{name='" + name + "'}";
     }
-
-
-
 
 }

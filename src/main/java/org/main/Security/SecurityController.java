@@ -44,7 +44,7 @@ public class SecurityController implements  ISecurityController {
             ObjectNode returnObject = objectMapper.createObjectNode();
             try {
                 UserDTO userInput = ctx.bodyAsClass(UserDTO.class);
-                User created = securityDAO.createUser(userInput.getName(), userInput.getEmail(), userInput.getPhone(), userInput.getPassword());
+                User created = securityDAO.registerUser(userInput.getName(), userInput.getEmail(), userInput.getPhone(), userInput.getPassword());
                 String token = createToken(new UserDTO(created));
                 ctx.status(HttpStatus.CREATED).json(new TokenDTO(token, userInput.getEmail()));
             } catch (EntityExistsException e) {
@@ -63,7 +63,7 @@ public class SecurityController implements  ISecurityController {
                 UserDTO user = ctx.bodyAsClass(UserDTO.class);
                 System.out.println("USER IN LOGIN: " + user);
 
-                User verifiedUserEntity = securityDAO.verifyUser(user.getEmail(), user.getPassword());
+                User verifiedUserEntity = securityDAO.getVerifiedUser(user.getEmail(), user.getPassword());
                 String token = createToken(new UserDTO(verifiedUserEntity));
                 ctx.status(200).json(new TokenDTO(token, user.getEmail()));
 

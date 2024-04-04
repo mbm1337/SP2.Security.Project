@@ -1,2 +1,8 @@
 GET http://localhost:7000/api/users
 ###
+POST http://localhost:7000/api/create
+
+{
+"name":"testWorkshop",
+"date":"22-12-24"
+}

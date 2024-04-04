@@ -2,25 +2,44 @@ package org.main.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.TypedQuery;
-import org.main.DTO.UserDTO;
+import org.main.Exception.NotAuthorizedException;
 import org.main.ressources.Role;
 import org.main.ressources.User;
 
+
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public class UserDAO {
-    EntityManagerFactory emf;
-    public UserDAO(EntityManagerFactory _emf)
-    {
+
+    private static UserDAO instance;
+    private static EntityManagerFactory emf;
+
+    public UserDAO(EntityManagerFactory _emf) {
         this.emf = _emf;
     }
 
-    public User createUser(String name ,String email,String phone,String password) {
+
+    public User getVerifiedUser(String email, String password) throws NotAuthorizedException {
+
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            User user = em.find(User.class, email);
+
+            if (user == null || !user.verifyUser(password)) {
+                throw new NotAuthorizedException(401, "Invalid user name or password");
+            }
+            em.getTransaction().commit();
+            return user;
+        }
+    }
+
+    public User registerUser(String name, String email, String phone, String password) throws NotAuthorizedException {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        User user = new User(name,email,phone ,password);
+        User user = new User(name,email, phone,password);
         Role userRole = em.find(Role.class, "user");
         if (userRole == null) {
             userRole = new Role("user");
@@ -32,24 +51,59 @@ public class UserDAO {
         em.close();
         return user;
     }
-    public User verifyUser(String username, String password) throws EntityNotFoundException {
-        EntityManager em = emf.createEntityManager();
-        User user = em.find(User.class, username);//retrieve entity from DAtabase find is part from Hibernate framework
-        if (user == null)
-            throw new EntityNotFoundException("No user found with username: " + username);
-        if (!user.verifyUser(password))
-            throw new EntityNotFoundException("Wrong password");
-        return user;
+
+
+
+    public Role createRole(String role) {
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            Role newRole = new Role(role);
+            em.persist(newRole);
+            em.getTransaction().commit();
+            return newRole;
+        }
     }
+
+    public User read(String userName) {
+        try (var em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            User user = em.find(User.class, userName);
+            em.getTransaction().commit();
+            return user;
+        }
+    }
+
     public List<User> getAll() {
         try (var em = emf.createEntityManager()) {
-            TypedQuery<User> q = em.createQuery("select u FROM User  u", User.class);
-            List<User> users = q.getResultList();
-
-
+            em.getTransaction().begin();
+            List<User> users = em.createQuery("SELECT u FROM User u", User.class).getResultList();
+            for(User u:users){
+                u.getRoles().size();
+            }
+            em.getTransaction().commit();
             return users;
         }
     }
+
+
+    public User update(User user) {
+        try(var em = emf.createEntityManager()){
+            em.getTransaction().begin();
+            em.merge(user);
+            em.getTransaction().commit();
+        }
+        return user;
+    }
+    public void delete(int id ) {
+        try (var em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            User user = em.find(User.class, id);
+            em.remove(user);
+            em.getTransaction().commit();
+        }
+    }
+
+
 
     public User getById(int id) {
         try (var em = emf.createEntityManager()) {
@@ -62,23 +116,4 @@ public class UserDAO {
 
     }
 
-    public User update(User user) {
-        try (var em = emf.createEntityManager()) {
-            em.getTransaction().begin();
-            em.merge(user);
-            em.getTransaction().commit();
-        }
-        return user;
-    }
-    public void delete(User user) {
-        try (var em = emf.createEntityManager()) {
-            em.getTransaction().begin();
-            User deleteUser = em.merge(user);
-            em.remove(deleteUser);
-            em.getTransaction().commit();
-        }
-    }
-
-
-
-    }
+}

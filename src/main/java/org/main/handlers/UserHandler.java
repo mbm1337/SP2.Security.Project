@@ -17,9 +17,12 @@ public class UserHandler {
 
 
 
-    UserDAO userDao;
+    private final UserDAO userDao;
     private  final ObjectMapper objectMapper = new ObjectMapper();
 
+    public UserHandler(UserDAO userDao) {
+        this.userDao = userDao;
+    }
 
 
     public Handler getAllUsers(){
@@ -29,16 +32,16 @@ public class UserHandler {
                 throw new ApiException(404, "users are not found ");
 
             } else {
-                ObjectMapper objectMapper = new ObjectMapper();
-                String json = objectMapper.writeValueAsString(users);
-                ctx.result(json);
-                ctx.status(200);
+                //ObjectMapper objectMapper = new ObjectMapper();
+                //String json = objectMapper.writeValueAsString(users);
+                //ctx.json(users);
+                ctx.status(200).json(users);
             }
         };
     }
-    public Handler getById(){
+    public Handler getByName(){
         return ctx -> {
-            int id = Integer.parseInt(ctx.pathParam("id"));
+            int id  = Integer.parseInt((ctx.pathParam("id")));
             User user = userDao.getById(id);
             if (user == null) {
                 throw new ApiException( 404, "User not found");
@@ -53,7 +56,7 @@ public class UserHandler {
     public Handler create() {
         return ctx -> {
             User user = ctx.bodyAsClass(User.class);
-            user = userDao.createUser(user.getName(), user.getEmail(), user.getPhone(), user.getPassword());
+            user = userDao.registerUser(user.getName(), user.getEmail(), user.getPhone(), user.getPassword());
 
             ObjectMapper objectMapper = new ObjectMapper();
             String json = objectMapper.writeValueAsString(user);
@@ -65,12 +68,12 @@ public class UserHandler {
 
     public Handler delete() {
         return ctx -> {
-            int id = Integer.parseInt(ctx.pathParam("id"));
+           int id = Integer.parseInt(ctx.pathParam("id"));
             User user = userDao.getById(id);
             if (user == null) {
                 throw new ApiException(404, "User not found");
             }
-            userDao.delete(user);
+            userDao.delete(id);
             ctx.status(204);
         };
     }
