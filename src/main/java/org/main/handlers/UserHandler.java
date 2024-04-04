@@ -1,6 +1,5 @@
 package org.main.handlers;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.http.Handler;
 
@@ -12,15 +11,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class UserHandler {
 
 
 
     UserDAO userDao;
     private  final ObjectMapper objectMapper = new ObjectMapper();
-
-
 
     public Handler getAllUsers(){
         return ctx -> {
@@ -53,6 +49,7 @@ public class UserHandler {
     public Handler create() {
         return ctx -> {
             User user = ctx.bodyAsClass(User.class);
+
             user = userDao.createUser(user.getName(), user.getEmail(), user.getPhone(), user.getPassword());
 
             ObjectMapper objectMapper = new ObjectMapper();

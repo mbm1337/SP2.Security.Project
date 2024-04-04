@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.TypedQuery;
 import org.main.DTO.UserDTO;
 import org.main.ressources.Role;
+
 import org.main.ressources.User;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class UserDAO {
             throw new EntityNotFoundException("Wrong password");
         return user;
     }
+  
     public List<User> getAll() {
         try (var em = emf.createEntityManager()) {
             TypedQuery<User> q = em.createQuery("select u FROM User  u", User.class);
