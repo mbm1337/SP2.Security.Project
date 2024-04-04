@@ -52,10 +52,10 @@ public class UserDAO {
         }
     }
 
-    public User getById(int id) {
+    public User getById(String email) {
         try (var em = emf.createEntityManager()) {
-            TypedQuery<User> q = em.createQuery("FROM User h WHERE h.id = :id", User.class);
-            q.setParameter("id", id);
+            TypedQuery<User> q = em.createQuery("FROM User h WHERE h.email = :email", User.class);
+            q.setParameter("email", email);
             return q.getSingleResult();
 
 

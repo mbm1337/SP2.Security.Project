@@ -1,21 +1,27 @@
 package org.main.handlers;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.http.Handler;
 
-import org.main.exception.ApiException;
 import org.main.dao.UserDAO;
+import org.main.exception.ApiException;
 import org.main.ressources.User;
+
 import java.util.List;
+
 
 public class UserHandler {
 
-    UserDAO userDao;
+
+
+    private final UserDAO userDao;
     private  final ObjectMapper objectMapper = new ObjectMapper();
 
     public UserHandler(UserDAO userDao) {
         this.userDao = userDao;
     }
+
 
     public Handler getAllUsers(){
         return ctx -> {
@@ -24,50 +30,44 @@ public class UserHandler {
                 throw new ApiException(404, "users are not found ");
 
             } else {
-                ObjectMapper objectMapper = new ObjectMapper();
-                String json = objectMapper.writeValueAsString(users);
-                ctx.result(json);
-                ctx.status(200);
+
+                ctx.status(200).json(users);
             }
         };
     }
-    public Handler getById(){
+    public Handler getByEmail(){
         return ctx -> {
-            int id = Integer.parseInt(ctx.pathParam("id"));
-            User user = userDao.getById(id);
+            String email  = (ctx.pathParam("email"));
+            User user = userDao.getById(email);
             if (user == null) {
                 throw new ApiException( 404, "User not found");
             }
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(user);
-            ctx.result(json);
-            ctx.status(200);
+
+
+            ctx.status(200).json(email);
         };
     }
 
     public Handler create() {
         return ctx -> {
             User user = ctx.bodyAsClass(User.class);
-
             user = userDao.createUser(user.getName(), user.getEmail(), user.getPhone(), user.getPassword());
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(user);
-            ctx.result(json);
-            ctx.status(201);
+
+            ctx.status(201).json(user);
         };
     }
 
 
     public Handler delete() {
         return ctx -> {
-            int id = Integer.parseInt(ctx.pathParam("id"));
-            User user = userDao.getById(id);
+            String email =ctx.pathParam("email");
+            User user = userDao.getById(email);
             if (user == null) {
                 throw new ApiException(404, "User not found");
             }
             userDao.delete(user);
-            ctx.status(204);
+            ctx.status(204).json("");
         };
     }
 
@@ -76,10 +76,7 @@ public class UserHandler {
             User user = ctx.bodyAsClass(User.class);
             user = userDao.update(user);
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(user);
-            ctx.result(json);
-            ctx.status(200);
+            ctx.status(200).json(user);
         };
     }
 
@@ -88,7 +85,7 @@ public class UserHandler {
 
 
 
-    }
+}
 
 
 
