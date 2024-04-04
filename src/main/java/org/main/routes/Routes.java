@@ -40,7 +40,7 @@ public class Routes {
                 post("/user",userHandler.create());
 
                 path("/user/{id}", () -> {
-                    get(userHandler.getById());
+                    get(userHandler.getByEmail());
 
                     put(userHandler.update());
 

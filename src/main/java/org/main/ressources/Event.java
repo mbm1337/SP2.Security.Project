@@ -47,9 +47,8 @@ public class Event {
     @Column(name = "deletedAt")
     private LocalDateTime deletedAt;
 
-    @ManyToMany (mappedBy = "registeredEvents")
+    @ManyToMany(cascade = CascadeType.DETACH)
     Set<User>users = new HashSet<>();
-
 
 
     public Event(String description) {

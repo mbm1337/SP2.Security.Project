@@ -1,5 +1,6 @@
 package org.main.ressources;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.mindrot.jbcrypt.BCrypt;
@@ -18,34 +19,31 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
 
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String email;
+
 
     @Column
     private String name;
-
-    @Column
-    private String email;
 
     @Column
     private String phone;
 
     @Column
     private String password;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "name"))
+    //@JsonIgnore
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+    //@JsonIgnore
     private Set<Event> registeredEvents = new HashSet<>();
 
 
-
-    public User(String name,String email,String phone, String password) {
+    public User(String name, String email, String phone, String password) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -53,16 +51,18 @@ public class User {
         String salt = BCrypt.gensalt();
         this.password = BCrypt.hashpw(password, salt);
     }
-    public boolean verifyUser(String password)
-    {
+
+    public boolean verifyUser(String password) {
+
         return BCrypt.checkpw(password, this.password);
     }
-         public void addRole(Role role ){
-          roles.add(role);
-           role.getUsers().add(this );
+
+    public void addRole(Role role) {
+        roles.add(role);
+        role.getUsers().add(this);
 
 
-  }
+    }
 
 
     public void removeRole(Role role) {
@@ -70,6 +70,7 @@ public class User {
         role.getUsers().remove(this);
     }
 
+    @JsonIgnore
     public Set<String> getRolesAsStrings() {
         if (roles.isEmpty()) {
             return null;
@@ -81,29 +82,31 @@ public class User {
         return rolesAsStrings;
     }
 
+    public void addEvent(Event event) {
+        registeredEvents.add(event);
+        event.getUsers().add(this);
+    }
 
-//    public void addEvent(Event event) {
-//        registeredEvents.add(event);
-//        event.getUsers().add(this );
-//
-//    }
-//    public void removeEvent(Event event) {
-//        registeredEvents.remove(event);
-//        event.getUsers().remove(this);
-//
-//    }
-//    public Set<String> getEventsAsStrings() {
-//        if (registeredEvents.isEmpty()) {
-//            return Collections.emptySet();
-//        }
-//        Set<String> eventsAsStrings = new HashSet<>();
-//        registeredEvents.forEach((event) -> {
-//            eventsAsStrings.add(event.getDescription());
-//        });
-//        return eventsAsStrings;
-//    }
+    public void removeEvent(Event event) {
+        registeredEvents.remove(event);
+        event.getUsers().remove(this);
+    }
 
+    @JsonIgnore
+    public Set<String> getEventsAsStrings() {
+        if (registeredEvents.isEmpty()) {
+            return Collections.emptySet();
+        }
+        Set<String> eventsAsStrings = new HashSet<>();
+        registeredEvents.forEach((event) -> {
+            eventsAsStrings.add(event.getDescription());
+        });
+        return eventsAsStrings;
+    }
 }
+
+
+
 
 
 
