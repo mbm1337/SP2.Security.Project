@@ -4,7 +4,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.TypedQuery;
-import org.main.DTO.UserDTO;
 import org.main.ressources.Role;
 
 import org.main.ressources.User;

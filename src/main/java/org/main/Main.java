@@ -1,25 +1,13 @@
 package org.main;
 
 import jakarta.persistence.EntityManagerFactory;
-import org.main.HibernateConfig.HibernateConfig;
+import org.main.config.HibernateConfig;
 import org.main.dao.EventDAO;
 import org.main.handlers.EventHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.javalin.Javalin;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import org.main.ApplicationConfig.ApplicationConfig;
-import org.main.HibernateConfig.HibernateConfig;
-import org.main.dao.UserDAO;
+import org.main.config.ApplicationConfig;
 import org.main.handlers.UserHandler;
 import io.javalin.apibuilder.EndpointGroup;
-import org.main.ressources.Event;
-import org.main.ressources.Role;
-import org.main.ressources.User;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 

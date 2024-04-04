@@ -1,4 +1,4 @@
-package org.main.HibernateConfig;
+package org.main.config;
 
 
 

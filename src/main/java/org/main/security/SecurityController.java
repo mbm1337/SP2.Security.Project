@@ -1,4 +1,4 @@
-package org.main.Security;
+package org.main.security;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,11 +13,11 @@ import io.javalin.http.HttpStatus;
 import io.javalin.validation.ValidationException;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
-import org.main.DTO.TokenDTO;
-import org.main.DTO.UserDTO;
-import org.main.Exception.ApiException;
-import org.main.Exception.NotAuthorizedException;
-import org.main.HibernateConfig.HibernateConfig;
+import org.main.dto.TokenDTO;
+import org.main.dto.UserDTO;
+import org.main.exception.ApiException;
+import org.main.exception.NotAuthorizedException;
+import org.main.config.HibernateConfig;
 import org.main.dao.UserDAO;
 import org.main.ressources.User;
 

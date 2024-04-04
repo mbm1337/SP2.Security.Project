@@ -1,4 +1,4 @@
-package org.main.Exception;
+package org.main.exception;
 
 
 public class NotAuthorizedException extends Exception {

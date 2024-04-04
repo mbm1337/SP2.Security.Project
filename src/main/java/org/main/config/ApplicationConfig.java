@@ -1,4 +1,4 @@
-package org.main.ApplicationConfig;
+package org.main.config;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,10 +6,10 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.javalin.Javalin;
 import io.javalin.apibuilder.EndpointGroup;
 import io.javalin.http.HttpStatus;
-import org.main.DTO.UserDTO;
-import org.main.Exception.ApiException;
-import org.main.Security.ISecurityController;
-import org.main.Security.SecurityController;
+import org.main.security.ISecurityController;
+import org.main.dto.UserDTO;
+import org.main.exception.ApiException;
+import org.main.security.SecurityController;
 
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;

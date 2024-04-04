@@ -3,17 +3,12 @@ package org.main.handlers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.http.Handler;
 
-import org.main.Exception.ApiException;
+import org.main.exception.ApiException;
 import org.main.dao.UserDAO;
 import org.main.ressources.User;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class UserHandler {
-
-
 
     UserDAO userDao;
     private  final ObjectMapper objectMapper = new ObjectMapper();
