@@ -1,12 +1,14 @@
 package org.main.handlers;
 
-import Exceptions.ApiException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.http.Handler;
 
+import org.main.Exception.ApiException;
 import org.main.dao.UserDAO;
 import org.main.ressources.User;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UserHandler {
@@ -15,7 +17,6 @@ public class UserHandler {
 
     UserDAO userDao;
     private  final ObjectMapper objectMapper = new ObjectMapper();
-
 
     public Handler getAllUsers(){
         return ctx -> {
@@ -48,7 +49,8 @@ public class UserHandler {
     public Handler create() {
         return ctx -> {
             User user = ctx.bodyAsClass(User.class);
-            user = userDao.create(user);
+
+            user = userDao.createUser(user.getName(), user.getEmail(), user.getPhone(), user.getPassword());
 
             ObjectMapper objectMapper = new ObjectMapper();
             String json = objectMapper.writeValueAsString(user);

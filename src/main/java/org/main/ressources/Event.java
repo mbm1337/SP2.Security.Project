@@ -48,4 +48,9 @@ public class Event {
     Set<User>users = new HashSet<>();
 
 
+
+    public Event(String description) {
+        this.description = description;
+    }
 }
+

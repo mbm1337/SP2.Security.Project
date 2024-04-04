@@ -4,15 +4,46 @@ import jakarta.persistence.EntityManagerFactory;
 import org.main.HibernateConfig.HibernateConfig;
 import org.main.dao.EventDAO;
 import org.main.handlers.EventHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.javalin.Javalin;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import org.main.ApplicationConfig.ApplicationConfig;
+import org.main.HibernateConfig.HibernateConfig;
+import org.main.dao.UserDAO;
 import org.main.handlers.UserHandler;
 import io.javalin.apibuilder.EndpointGroup;
+import org.main.ressources.Event;
+import org.main.ressources.Role;
+import org.main.ressources.User;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class Main {
-
-
     public static void main(String[] args) {
+        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig();
+
+
+
+        Main.startServer(7000);
+
+
+    }
+
+
+    public static void startServer(int port) {
+        ObjectMapper om = new ObjectMapper();
+        ApplicationConfig applicationConfig = ApplicationConfig.getInstance();
+        applicationConfig
+                .initiateServer()
+                .startServer(port)
+                .setExceptionHandling()
+                .setRoute(getUserRoutes());
+
     }
 
 
@@ -33,6 +64,9 @@ public class Main {
     }
 
     public static EndpointGroup getUserRoutes() {
+        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig();
+        var em = emf.createEntityManager();
+
         UserHandler userHandler = new UserHandler();
         return () -> {
             path("users", () -> {

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.Collections;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,22 +23,31 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String name;
 
+    @Column
     private String email;
 
+    @Column
     private String phone;
 
+    @Column
     private String password;
     @ManyToMany
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "name"))
     private Set<Role> roles = new HashSet<>();
-    @ManyToMany
-    private Set<Event> registeredEvents = new HashSet<>();
+//    @ManyToMany
+//    private Set<Event> registeredEvents = new HashSet<>();
 
 
 
-    public User(String email, String password) {
+    public User(String name,String email,String phone, String password) {
+        this.name = name;
         this.email = email;
+        this.phone = phone;
         this.password = password;
         String salt = BCrypt.gensalt();
         this.password = BCrypt.hashpw(password, salt);
@@ -69,16 +80,28 @@ public class User {
         return rolesAsStrings;
     }
 
-    public void addEvent(Event event) {
-        registeredEvents.add(event);
-        //event
 
-    }
-    public void removeEvent(Event event) {
-        registeredEvents.remove(event);
+//    public void addEvent(Event event) {
+//        registeredEvents.add(event);
+//        event.getUsers().add(this );
+//
+//    }
+//    public void removeEvent(Event event) {
+//        registeredEvents.remove(event);
+//        event.getUsers().remove(this);
+//
+//    }
+//    public Set<String> getEventsAsStrings() {
+//        if (registeredEvents.isEmpty()) {
+//            return Collections.emptySet();
+//        }
+//        Set<String> eventsAsStrings = new HashSet<>();
+//        registeredEvents.forEach((event) -> {
+//            eventsAsStrings.add(event.getDescription());
+//        });
+//        return eventsAsStrings;
+//    }
 
-        //event
-    }
 }
 
 
