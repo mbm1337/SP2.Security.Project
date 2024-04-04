@@ -1,65 +1,40 @@
-package org.main;
+package org.main.routes;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.EntityManagerFactory;
-import org.main.ApplicationConfig.ApplicationConfig;
-import org.main.HibernateConfig.HibernateConfig;
-import org.main.dao.UserDAO;
-import org.main.handlers.UserHandler;
 import io.javalin.apibuilder.EndpointGroup;
+import jakarta.persistence.EntityManagerFactory;
 
+import org.main.dao.EventDAO;
+import org.main.dao.UserDAO;
+import org.main.handlers.EventHandler;
+import org.main.handlers.UserHandler;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
+import static io.javalin.apibuilder.ApiBuilder.post;
 
+public class Routes {
 
-public class Main {
+    public static EndpointGroup getEventRoutes(EntityManagerFactory emf) {
 
-    public static void main(String[] args) {
-
-        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig();
-
-
-
-        Main.startServer(7000);
-
-
-    }
-
-
-    public static void startServer(int port) {
-        ObjectMapper om = new ObjectMapper();
-        ApplicationConfig applicationConfig = ApplicationConfig.getInstance();
-        applicationConfig
-                .initiateServer()
-                .startServer(port)
-                .setExceptionHandling()
-                .setRoute(getUserRoutes());
-
-    }
-
-
-    public static EndpointGroup getEventRoutes() {
+        EventDAO eventDAO = new EventDAO(emf);
+        EventHandler eventHandler = new EventHandler(eventDAO);
         return () -> {
             path("events", () -> {
-                get("/", ctx ->{} );
-                get("/:id", ctx ->{});
-                post("/", ctx ->{});
-                put("/:id", ctx ->{});
-                delete("/:id", ctx ->{});
+                get("/", eventHandler.getAll());
+                get("/:id", eventHandler.getById());
+                post("/", eventHandler.create());
+                put("/:id", eventHandler.update());
+                delete("/:id", eventHandler.delete());
 
             });
         };
     }
 
-    public static EndpointGroup getUserRoutes() {
-        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig();
-        UserDAO user = new UserDAO(emf);
+    public static EndpointGroup getUserRoutes(EntityManagerFactory emf){
 
-
-
-        UserHandler userHandler = new UserHandler(user);
+        UserDAO userDAO = new UserDAO(emf);
+        UserHandler userHandler = new UserHandler(userDAO);
         return () -> {
-            path("/users", () -> {
+            path("users", () -> {
                 get(userHandler.getAllUsers());
 
                 post("/user",userHandler.create());
