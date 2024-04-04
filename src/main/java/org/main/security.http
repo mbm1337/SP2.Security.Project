@@ -1,0 +1,17 @@
+POST http://localhost:7070/api/auth/register
+
+{
+"email": "admin@gmail.com",
+"name": "admin",
+"password": "test123",
+"phone": "00000000"
+}
+
+###
+
+POST http://localhost:7070/api/auth/login
+
+{
+"name": "admin",
+"password": "test123"
+}
