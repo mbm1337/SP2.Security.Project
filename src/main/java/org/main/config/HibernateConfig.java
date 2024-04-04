@@ -1,11 +1,7 @@
 package org.main.config;
 
-
-
-
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
