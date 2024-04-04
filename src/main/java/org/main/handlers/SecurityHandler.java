@@ -56,7 +56,7 @@ public class SecurityHandler implements ISecurityHandler {
                 UserDTO user = ctx.bodyAsClass(UserDTO.class);
                 System.out.println("USER IN LOGIN: " + user);
 
-                User verifiedUserEntity = securityDAO.getVerifiedUser(user.getEmail(), user.getPassword());
+                User verifiedUserEntity = securityDAO.verifyUser(user.getEmail(), user.getPassword());
                 String token = createToken(new UserDTO(verifiedUserEntity));
                 ctx.status(200).json(new TokenDTO(token, user.getEmail()));
 

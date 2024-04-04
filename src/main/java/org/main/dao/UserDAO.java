@@ -82,19 +82,14 @@ public class UserDAO  {
         return user;
     }
 
-    public User getVerifiedUser(String email, String password) throws NotAuthorizedException {
-        try (EntityManager em = emf.createEntityManager()) {
-            List<User> users = em.createQuery("SELECT u FROM User u").getResultList();
-            users.stream().forEach(user -> System.out.println(user.getName() + " " + user.getPassword()));
-            User user = em.find(User.class, email);
-            if (user == null)
-                throw new EntityNotFoundException("No user found with email: " + email); //RuntimeException
-            user.getRoles().size(); // force roles to be fetched from db
-            if (!user.verifyUser(password)) {
-                throw new NotAuthorizedException(401, "Wrong password");
-            }
-            return user;
-        }
+    public User verifyUser(String email, String password) throws EntityNotFoundException {
+        EntityManager em = emf.createEntityManager();
+        User user = em.find(User.class, email);
+        if (user == null)
+            throw new EntityNotFoundException("No user found with email: " + email);
+        if (!user.verifyUser(password))
+            throw new EntityNotFoundException("Wrong password");
+        return user;
     }
 
 
