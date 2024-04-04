@@ -46,6 +46,7 @@ public class Event {
     private LocalDateTime updatedAt;
     @Column(name = "deletedAt")
     private LocalDateTime deletedAt;
+  
     @ManyToMany(cascade = CascadeType.DETACH)
     Set<User>users = new HashSet<>();
 
