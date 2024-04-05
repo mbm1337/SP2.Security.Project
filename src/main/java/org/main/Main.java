@@ -1,9 +1,5 @@
 package org.main;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import static org.main.Routes.Routes.getSecuredRoutes;
-import static org.main.Routes.Routes.getSecurityRoutes;
-import static org.main.Routes.Routes.getUserRoutes;
-import static org.main.Routes.Routes.getEventRoutes;
 
 import jakarta.persistence.EntityManagerFactory;
 import org.main.config.HibernateConfig;

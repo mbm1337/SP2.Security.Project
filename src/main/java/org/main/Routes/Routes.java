@@ -1,6 +1,4 @@
-
 package org.main.routes;
-
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.apibuilder.EndpointGroup;
@@ -31,10 +29,11 @@ public class Routes {
         return () -> {
             path("events", () -> {
                 get("/", eventHandler.getAll());
-                get("/:id", eventHandler.getById());
+                get("/{id}", eventHandler.getById());
                 post("/", eventHandler.create());
-                put("/:id", eventHandler.update());
-                delete("/:id", eventHandler.delete());
+                put("/{id}", eventHandler.update());
+                delete("/{id}", eventHandler.delete());
+
             });
         };
     }
@@ -60,13 +59,13 @@ public class Routes {
         };
     }
 
+
     public static EndpointGroup getRegistrationRoutes(EntityManagerFactory emf) {
 
         RegistrationDAO registrationDAO = new RegistrationDAO(emf);
         RegistrationHandler registrationHandler = new RegistrationHandler(registrationDAO);
         return () -> {
             path("registrations", () -> {
-
                 get(RegistrationHandler.readAll(registrationDAO), Role.ANYONE);
 
                 get("/id/{id}",RegistrationHandler.getById(registrationDAO), Role.ANYONE);

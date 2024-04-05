@@ -1,4 +1,4 @@
-package org.main.Routes;
+package org.main.routes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.apibuilder.EndpointGroup;
