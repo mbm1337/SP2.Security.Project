@@ -1,8 +1,8 @@
 POST http://localhost:7000/api/auth/register
 
 {
-"name": "admin",
-"email": "admin@gmail.com",
+"name": "test2",
+"email": "test2@gmail.com",
 "password": "test123",
 "phone": "00000000"
 }
@@ -12,6 +12,14 @@ POST http://localhost:7000/api/auth/register
 POST http://localhost:7000/api/auth/login
 
 {
-"email": "admin@gmail.com",
+"email": "test2@gmail.com",
 "password": "test123"
 }
+
+###
+GET http://localhost:7000/api/protected/user_demo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaG9tYXMgSGFydG1hbm4iLCJzdWIiOiJ0ZXN0MkBnbWFpbC5jb20iLCJleHAiOjE3MTIzNTcwOTAsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwicm9sZXMiOiJ1c2VyIn0.6Fb2hWfgYE9eOSAwrZ0LnyPBe0dbMz-cTZ1JXLveWR4
+
+###
+GET http://localhost:7000/api/protected/admin_demo
+Authorization: Bearer

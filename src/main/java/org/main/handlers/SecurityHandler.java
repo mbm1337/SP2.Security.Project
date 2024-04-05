@@ -83,7 +83,7 @@ public class SecurityHandler implements ISecurityHandler {
             TOKEN_EXPIRE_TIME = "1800000"; // 30 minutes in milliseconds
             SECRET_KEY = Utils.getPropertyValue("SECRET_KEY","config.properties");
         }
-        return TokenUtils.createToken(user, ISSUER, TOKEN_EXPIRE_TIME, SECRET_KEY);
+        return TokenUtils.createToken(new UserDTO(user.getEmail(), user.getRoles()), ISSUER, TOKEN_EXPIRE_TIME, SECRET_KEY);
     }
 
     @Override
@@ -171,12 +171,12 @@ public class SecurityHandler implements ISecurityHandler {
         // Return a user with Set of roles as strings
         SignedJWT jwt = SignedJWT.parse(token);
         String roles = jwt.getJWTClaimsSet().getClaim("roles").toString();
-        String username = jwt.getJWTClaimsSet().getClaim("username").toString();
+        String email = jwt.getJWTClaimsSet().getClaim("email").toString();
 
         Set<String> rolesSet = Arrays
                 .stream(roles.split(","))
                 .collect(Collectors.toSet());
-        return new UserDTO(username, rolesSet);
+        return new UserDTO(email, rolesSet);
     }
 
     @Override

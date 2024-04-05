@@ -20,14 +20,13 @@ public class UserDTO {
     private Set<String> roles;
 
     public UserDTO(User user){
-        this.name = user.getName();
         this.email = user.getEmail();
-        this.phone = user.getPhone();
-        this.roles = user.getRolesAsStrings();
         this.password = user.getPassword();
+        this.roles = user.getRolesAsStrings();
     }
     public UserDTO(String email, Set<String> rolesSet) {
         this.email = email;
         this.roles = rolesSet;
     }
+
 }

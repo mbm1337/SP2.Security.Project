@@ -44,7 +44,7 @@ public class EventDTO {
         this.createdAt = event.getCreatedAt();
         this.updatedAt = event.getUpdatedAt();
         this.deletedAt = event.getDeletedAt();
-        this.registeredUsers = event.getUsers();
+        //this.registeredUsers = event.getUsers();
     }
 
 
