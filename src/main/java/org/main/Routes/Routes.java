@@ -66,6 +66,7 @@ public class Routes {
         RegistrationHandler registrationHandler = new RegistrationHandler(registrationDAO);
         return () -> {
             path("registrations", () -> {
+
                 get(RegistrationHandler.readAll(registrationDAO), Role.ANYONE);
 
                 get("/id/{id}",RegistrationHandler.getById(registrationDAO), Role.ANYONE);
