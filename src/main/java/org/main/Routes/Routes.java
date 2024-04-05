@@ -1,4 +1,6 @@
-package org.main.Routes;
+
+package org.main.routes;
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.apibuilder.EndpointGroup;
@@ -6,8 +8,10 @@ import io.javalin.security.RouteRole;
 import jakarta.persistence.EntityManagerFactory;
 import org.main.config.HibernateConfig;
 import org.main.dao.EventDAO;
+import org.main.dao.RegistrationDAO;
 import org.main.dao.UserDAO;
 import org.main.handlers.EventHandler;
+import org.main.handlers.RegistrationHandler;
 import org.main.handlers.SecurityHandler;
 import org.main.handlers.UserHandler;
 
@@ -31,7 +35,6 @@ public class Routes {
                 post("/", eventHandler.create());
                 put("/:id", eventHandler.update());
                 delete("/:id", eventHandler.delete());
-
             });
         };
     }
@@ -57,17 +60,23 @@ public class Routes {
         };
     }
 
+    public static EndpointGroup getRegistrationRoutes(EntityManagerFactory emf) {
 
-    public static EndpointGroup getRegistrationRoutes() {
+        RegistrationDAO registrationDAO = new RegistrationDAO(emf);
+        RegistrationHandler registrationHandler = new RegistrationHandler(registrationDAO);
         return () -> {
             path("registrations", () -> {
-                get("/:id", ctx ->{});
-                post("/:id", ctx ->{});
-                delete("/:id", ctx ->{});
+
+                get(RegistrationHandler.readAll(registrationDAO), Role.ANYONE);
+
+                get("/id/{id}",RegistrationHandler.getById(registrationDAO), Role.ANYONE);
+
+                post("/{id}", ctx ->{}, Role.ANYONE);
+                delete("/{id}", ctx ->{}, Role.ANYONE);
 
             });
             path("registration", () -> {
-                get("/:id", ctx ->{});
+                get("/{id}", ctx ->{}, Role.ANYONE);
             });
         };
     }

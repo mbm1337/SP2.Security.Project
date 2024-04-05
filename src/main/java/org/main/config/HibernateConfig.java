@@ -9,6 +9,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.main.Utils.Utils;
 import org.main.ressources.Event;
+import org.main.ressources.Registration;
 import org.main.ressources.Role;
 import org.main.ressources.User;
 
@@ -37,6 +38,8 @@ public class HibernateConfig {
         configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(Role.class);
         configuration.addAnnotatedClass(Event.class);
+        configuration.addAnnotatedClass(Registration.class);
+
     }
 
     private static EntityManagerFactory createEMF(boolean forTest) {

@@ -1,2 +1,4 @@
 GET http://localhost:7000/api/users
 ###
+
+GET http://localhost:7000/api/registrations/id/3

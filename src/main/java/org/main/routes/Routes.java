@@ -6,8 +6,10 @@ import io.javalin.security.RouteRole;
 import jakarta.persistence.EntityManagerFactory;
 import org.main.config.HibernateConfig;
 import org.main.dao.EventDAO;
+import org.main.dao.RegistrationDAO;
 import org.main.dao.UserDAO;
 import org.main.handlers.EventHandler;
+import org.main.handlers.RegistrationHandler;
 import org.main.handlers.SecurityHandler;
 import org.main.handlers.UserHandler;
 
@@ -27,10 +29,10 @@ public class Routes {
         return () -> {
             path("events", () -> {
                 get("/", eventHandler.getAll());
-                get("/:id", eventHandler.getById());
+                get("/{id}", eventHandler.getById());
                 post("/", eventHandler.create());
-                put("/:id", eventHandler.update());
-                delete("/:id", eventHandler.delete());
+                put("/{id}", eventHandler.update());
+                delete("/{id}", eventHandler.delete());
 
             });
         };
@@ -58,16 +60,22 @@ public class Routes {
     }
 
 
-    public static EndpointGroup getRegistrationRoutes() {
+    public static EndpointGroup getRegistrationRoutes(EntityManagerFactory emf) {
+
+        RegistrationDAO registrationDAO = new RegistrationDAO(emf);
+        RegistrationHandler registrationHandler = new RegistrationHandler(registrationDAO);
         return () -> {
             path("registrations", () -> {
-                get("/:id", ctx ->{});
-                post("/:id", ctx ->{});
-                delete("/:id", ctx ->{});
+                get(RegistrationHandler.readAll(registrationDAO), Role.ANYONE);
+
+                get("/id/{id}",RegistrationHandler.getById(registrationDAO), Role.ANYONE);
+
+                post("/{id}", ctx ->{}, Role.ANYONE);
+                delete("/{id}", ctx ->{}, Role.ANYONE);
 
             });
             path("registration", () -> {
-                get("/:id", ctx ->{});
+                get("/{id}", ctx ->{}, Role.ANYONE);
             });
         };
     }
