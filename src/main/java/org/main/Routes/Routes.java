@@ -29,10 +29,10 @@ public class Routes {
         return () -> {
             path("events", () -> {
                 get("/", eventHandler.getAll());
-                get("/:id", eventHandler.getById());
+                get("/{id}", eventHandler.getById());
                 post("/", eventHandler.create());
-                put("/:id", eventHandler.update());
-                delete("/:id", eventHandler.delete());
+                put("/{id}", eventHandler.update());
+                delete("/{id}", eventHandler.delete());
 
             });
         };
@@ -67,13 +67,13 @@ public class Routes {
         return () -> {
             path("registrations", () -> {
                 get(RegistrationHandler.readAll(registrationDAO));
-                get("/:id", ctx ->{});
-                post("/:id", ctx ->{});
-                delete("/:id", ctx ->{});
+                get("/{id}", ctx ->{});
+                post("/{id}", ctx ->{});
+                delete("/{id}", ctx ->{});
 
             });
             path("registration", () -> {
-                get("/:id", ctx ->{});
+                get("/{id}", ctx ->{});
             });
         };
     }
