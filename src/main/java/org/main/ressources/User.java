@@ -40,10 +40,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "name"))
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany
-    private Set<Event> registeredEvents = new HashSet<>();
-
-
 
     public User(String name,String email,String phone, String password) {
         this.name = name;
