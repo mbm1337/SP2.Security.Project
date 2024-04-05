@@ -5,7 +5,8 @@ import org.main.dto.RegistrationDTO;
 import org.main.exception.ApiException;
 import io.javalin.http.Handler;
 import org.main.ressources.Registration;
-
+import org.main.ressources.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,23 +33,16 @@ public class RegistrationHandler {
 
     public static Handler readAll(RegistrationDAO registrationDAO) {
         return ctx -> {
-            List<jakarta.servlet.Registration> servletRegistrations = registrationDAO.readAll();
-            List<org.main.ressources.Registration> registrations = new ArrayList<>();
-
-            for (jakarta.servlet.Registration servletRegistration : servletRegistrations) {
-
-            }
-
-            List<RegistrationDTO> registrationDTOS = new ArrayList<>();
-
-            for (Registration r : registrations){
-                registrationDTOS.add(convertToDTO(r));
-            }
-
-            if (registrationDAO != null) {
-                ctx.json(registrationDTOS);
-            } else {
+            List<Registration> registrations = registrationDAO.readAll();
+            if (registrations.isEmpty()) {
                 throw new ApiException(404, "No registrations available. " + timestamp);
+            } else {
+                List<RegistrationDTO> registrationDTOS = new ArrayList<>();
+                for (Registration r : registrations){
+                    registrationDTOS.add(convertToDTO(r));
+                }
+
+                ctx.status(200).json(registrationDTOS);
             }
         };
     }

@@ -1,12 +1,16 @@
 package org.main.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.servlet.Registration;
 import org.main.dto.RegistrationDTO;
+
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.TypedQuery;
+
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
+import org.main.ressources.Registration;
 import org.main.ressources.User;
 
 import java.util.List;
@@ -49,11 +53,9 @@ public class RegistrationDAO {
 
     public Registration getById(int id) {
         try (var em = emf.createEntityManager()) {
-            TypedQuery<User> q = em.createQuery("Select r From Registration r WHERE r.id = :id", User.class);
+            TypedQuery<Registration> q = em.createQuery("Select r From Registration r WHERE r.id = :id", Registration.class);
             q.setParameter("id", id);
-            return (Registration) q.getSingleResult();
-
-
+            return q.getSingleResult();
         }
     }
 }

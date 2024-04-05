@@ -1,12 +1,10 @@
 package org.main;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import static org.main.routes.Routes.getSecuredRoutes;
-import static org.main.routes.Routes.getSecurityRoutes;
-import static org.main.routes.Routes.getUserRoutes;
-import static org.main.routes.Routes.getEventRoutes;
 import jakarta.persistence.EntityManagerFactory;
 import org.main.config.HibernateConfig;
 import org.main.config.ApplicationConfig;
+
+import static org.main.routes.Routes.*;
 
 
 public class Main {
@@ -28,6 +26,8 @@ public class Main {
                 .setRoute(getSecuredRoutes())
                 .checkSecurityRoles()
                 .setRoute(getUserRoutes(emf))
-                .setRoute(getEventRoutes(emf));
+                .setRoute(getEventRoutes(emf))
+                .setRoute(getRegistrationRoutes(emf));
+
     }
 }

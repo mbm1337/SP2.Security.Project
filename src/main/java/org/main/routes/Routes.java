@@ -66,14 +66,14 @@ public class Routes {
         RegistrationHandler registrationHandler = new RegistrationHandler(registrationDAO);
         return () -> {
             path("registrations", () -> {
-                get(RegistrationHandler.readAll(registrationDAO));
-                get("/{id}", ctx ->{});
-                post("/{id}", ctx ->{});
-                delete("/{id}", ctx ->{});
+                get(RegistrationHandler.readAll(registrationDAO), Role.ANYONE);
+                get("/{id}", ctx ->{}, Role.ANYONE);
+                post("/{id}", ctx ->{}, Role.ANYONE);
+                delete("/{id}", ctx ->{}, Role.ANYONE);
 
             });
             path("registration", () -> {
-                get("/{id}", ctx ->{});
+                get("/{id}", ctx ->{}, Role.ANYONE);
             });
         };
     }

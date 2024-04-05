@@ -28,7 +28,7 @@ public class Event {
     @Column(name = "time")
     private LocalDateTime time;
     @Column(name = "duration")
-    private int duration;
+    private Integer duration;
     @Column(name = "capacity")
     private int capacity;
     @Column(name = "location")
@@ -56,7 +56,7 @@ public class Event {
         this.description = description;
     }
 
-    
+
 }
 
 
