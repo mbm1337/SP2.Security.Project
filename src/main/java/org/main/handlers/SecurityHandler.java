@@ -22,6 +22,7 @@ import org.main.exception.ApiException;
 import org.main.exception.NotAuthorizedException;
 import org.main.ressources.User;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
