@@ -76,6 +76,12 @@ public class User {
         return rolesAsStrings;
     }
 
+    public void updatePassword(String newPassword) {
+        String salt = BCrypt.gensalt();
+        this.password = BCrypt.hashpw(newPassword, salt);
+    }
+
+
 
 //    public void addEvent(Event event) {
 //        registeredEvents.add(event);

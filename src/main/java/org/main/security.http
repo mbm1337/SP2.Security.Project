@@ -17,8 +17,16 @@ POST http://localhost:7000/api/auth/login
 }
 
 ###
+POST http://localhost:7000/api/auth/reset-password
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaG9tYXMgSGFydG1hbm4iLCJzdWIiOiJ0ZXN0MkBnbWFpbC5jb20iLCJleHAiOjE3MTI0MjA3MTYsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwicm9sZXMiOiJ1c2VyIn0.0swBg7WYUMt3tdYoGeTMNqHYGFogVlDtC8ENn3O-ZF0
+
+{
+  "newPassword": "newSecurePassword123"
+}
+
+###
 GET http://localhost:7000/api/protected/user_demo
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaG9tYXMgSGFydG1hbm4iLCJzdWIiOiJ0ZXN0MkBnbWFpbC5jb20iLCJleHAiOjE3MTIzNTcwOTAsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwicm9sZXMiOiJ1c2VyIn0.6Fb2hWfgYE9eOSAwrZ0LnyPBe0dbMz-cTZ1JXLveWR4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaG9tYXMgSGFydG1hbm4iLCJzdWIiOiJ0ZXN0MkBnbWFpbC5jb20iLCJleHAiOjE3MTI0MjA3MTYsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwicm9sZXMiOiJ1c2VyIn0.0swBg7WYUMt3tdYoGeTMNqHYGFogVlDtC8ENn3O-ZF0
 
 ###
 GET http://localhost:7000/api/protected/admin_demo

@@ -9,8 +9,11 @@ import jakarta.persistence.TypedQuery;
 import org.main.exception.NotAuthorizedException;
 import org.main.ressources.Role;
 import org.main.ressources.User;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
+
+import static org.main.config.HibernateConfig.getEntityManagerFactory;
 
 public class UserDAO  {
     private EntityManagerFactory emf;
@@ -91,6 +94,25 @@ public class UserDAO  {
             throw new EntityNotFoundException("Wrong password");
         return user;
     }
+
+    public void updatePassword(String email, String newPassword) {
+        EntityManager em = getEntityManagerFactory().createEntityManager();
+        try {
+            em.getTransaction().begin();
+            User user = em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+
+            user.updatePassword(newPassword);
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 
 
 
