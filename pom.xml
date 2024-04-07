@@ -43,6 +43,12 @@
             <version>2.15.0</version>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.15.0</version>
+        </dependency>
+
+        <dependency>
             <!--  https://nimbusds.com/products/nimbus-jose-jwt   -->
             <groupId>com.nimbusds</groupId>
             <artifactId>nimbus-jose-jwt</artifactId>

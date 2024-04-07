@@ -126,7 +126,7 @@ public class SecurityHandler implements ISecurityHandler {
             TOKEN_EXPIRE_TIME = System.getenv("TOKEN_EXPIRE_TIME");
             SECRET_KEY = System.getenv("SECRET_KEY");
         } else {
-            ISSUER = "Thomas Hartmann";
+            ISSUER = "Gruppe4";
             TOKEN_EXPIRE_TIME = "1800000"; // 30 minutes in milliseconds
             SECRET_KEY = Utils.getPropertyValue("SECRET_KEY","config.properties");
         }

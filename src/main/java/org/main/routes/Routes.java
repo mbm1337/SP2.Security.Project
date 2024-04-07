@@ -30,7 +30,7 @@ public class Routes {
             path("events", () -> {
                 get("/", eventHandler.getAll());
                 get("/{id}", eventHandler.getById());
-                post("/", eventHandler.create());
+                post("/", eventHandler.create(), Role.ANYONE);
                 put("/{id}", eventHandler.update());
                 delete("/{id}", eventHandler.delete());
 
@@ -91,15 +91,7 @@ public class Routes {
             });
         };
     }
-    public static EndpointGroup getSecuredRoutes(){
-        return ()->{
-            path("/protected", ()->{
-                before(securityHandler.authenticate());
-                get("/user_demo",(ctx)->ctx.json(jsonMapper.createObjectNode().put("msg",  "Hello from USER Protected")),Role.USER);
-                get("/admin_demo",(ctx)->ctx.json(jsonMapper.createObjectNode().put("msg",  "Hello from ADMIN Protected")),Role.ADMIN);
-            });
-        };
-    }
+
     public enum Role implements RouteRole { ANYONE, USER, ADMIN }
 
 }

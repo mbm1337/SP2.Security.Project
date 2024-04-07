@@ -4,7 +4,9 @@ package org.main.ressources;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,9 +26,9 @@ public class Event {
     @Column(name = "description")
     private String description;
     @Column(name = "date")
-    private LocalDateTime date;
+    private LocalDate date;
     @Column(name = "time")
-    private LocalDateTime time;
+    private LocalTime time;
     @Column(name = "duration")
     private Integer duration;
     @Column(name = "capacity")
@@ -47,7 +49,7 @@ public class Event {
     private LocalDateTime updatedAt;
     @Column(name = "deletedAt")
     private LocalDateTime deletedAt;
-    
+
 
 
     public Event(String description) {
