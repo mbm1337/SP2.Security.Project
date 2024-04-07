@@ -35,6 +35,8 @@ public class Event {
     private String location;
     @Column(name = "image")
     private String image; // ???
+    @Column(name="category")
+    private String category;
     @Column(name = "status")
     private Status status;
     public enum Status {
@@ -54,7 +56,11 @@ public class Event {
         this.description = description;
     }
 
-
+    public Event(String description, String category, Status status) {
+        this.description = description;
+        this.category = category;
+        this.status = status;
+    }
 }
 
 
