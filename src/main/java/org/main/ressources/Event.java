@@ -49,8 +49,20 @@ public class Event {
     private LocalDateTime updatedAt;
     @Column(name = "deletedAt")
     private LocalDateTime deletedAt;
+    @PrePersist
+    private void onCreate() {
+        createdAt = LocalDateTime.now();
 
+    }
+    @PreUpdate
+    private void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
+    @PreRemove
+    private void onDelete() {
+        deletedAt = LocalDateTime.now();
+    }
 
     public Event(String description) {
         this.description = description;

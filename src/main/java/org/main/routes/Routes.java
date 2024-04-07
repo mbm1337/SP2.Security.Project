@@ -20,7 +20,11 @@ public class Routes {
 
     private static SecurityHandler securityHandler = new SecurityHandler();
 
-    private static final ObjectMapper jsonMapper = new ObjectMapper();
+    private static ObjectMapper jsonMapper;
+
+    public Routes(ObjectMapper objectMapper) {
+        this.jsonMapper = objectMapper;
+    }
 
     public static EndpointGroup getEventRoutes(EntityManagerFactory emf) {
 
