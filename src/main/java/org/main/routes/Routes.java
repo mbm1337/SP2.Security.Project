@@ -52,7 +52,7 @@ public class Routes {
 
                 post("/user",userHandler.create());
 
-                path("/user/{id}", () -> {
+                path("/user/{email}", () -> {
                     get(userHandler.getByEmail());
 
                     put(userHandler.update());
@@ -70,7 +70,7 @@ public class Routes {
         RegistrationHandler registrationHandler = new RegistrationHandler(registrationDAO);
         return () -> {
             path("registrations", () -> {
-                get(RegistrationHandler.readAll(registrationDAO), Role.ADMIN);
+                get(RegistrationHandler.readAll(registrationDAO), Role.USER);
 
                 get("/id/{id}",RegistrationHandler.getById(registrationDAO), Role.ANYONE);
 
@@ -96,6 +96,6 @@ public class Routes {
         };
     }
 
-    public enum Role implements RouteRole { ANYONE, USER, ADMIN }
+    public enum Role implements RouteRole { ANYONE, USER, ADMIN,admin }
 
 }

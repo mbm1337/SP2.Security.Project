@@ -1,14 +1,14 @@
 GET http://localhost:7000/api/users
 ###
 
-GET http://localhost:7000/api/registrations/id/3
+GET http://localhost:7000/api/registrations/id/1
 ### log in
 POST http://localhost:7000/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "user4",
-  "email": "user4@email.dk",
+  "name": "user2",
+  "email": "user2@email.dk",
   "phone": "12345678",
   "password": "1234"
 }
@@ -17,12 +17,9 @@ POST http://localhost:7000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "user5@email.dk",
+  "email": "user@email.dk",
 "password": "1234"
 }
-### get in with Json Web Token
-POST http://localhost:7000/api/protected/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaG9tYXMgSGFydG1hbm4iLCJzdWIiOiJ1c2VyQGVtYWlsLmRrIiwiZXhwIjoxNzEyNTI3MDQ5LCJlbWFpbCI6InVzZXJAZW1haWwuZGsiLCJyb2xlcyI6InVzZXIifQ.RXh0yC0bgWqA08Kq8BRYfGxoWKcKYCPtzCBTuUkHkM4
 ###
 POST http://localhost:7000/api/events
 Content-Type: application/json
@@ -38,7 +35,12 @@ Content-Type: application/json
   "image": "image1.png",
   "status": "ACTIVE"
 }
-###
+###get in with Json Web Token
 
 GET http://localhost:7000/api/registrations/
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidXNlcjVAZW1haWwuZGsiLCJleHAiOjE3MTI1MzkwODksImVtYWlsIjoidXNlcjVAZW1haWwuZGsiLCJyb2xlcyI6IkFETUlOIn0.n2-S8HaS2013qxYaA3vTrqMfB1V_EJh24HOjN1z3tEQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidXNlckBlbWFpbC5kayIsImV4cCI6MTcxMjU0ODE1NywiZW1haWwiOiJ1c2VyQGVtYWlsLmRrIiwicm9sZXMiOiJ1c2VyIn0.sOGnKLkZiJm_mzVjJjTjhhs3_MKxHF-rbnHrDHodQlo
+###
+GET http://localhost:7000/api/users/user/user4@email.dk
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidXNlcjRAZW1haWwuZGsiLCJleHAiOjE3MTI1NDE3ODQsImVtYWlsIjoidXNlcjRAZW1haWwuZGsiLCJyb2xlcyI6InVzZXIifQ.g2mAThnuVNtAjvNuQ-toO2d6lqFDRlCcxiIqKrqdCqA
+###
+GET http://localhost:7000/api/users/

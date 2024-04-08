@@ -26,7 +26,7 @@ public class User {
     private String name;
 
 
-    @Column(name = "email")
+    @Column(name = "email" ,unique = true)
     private String email;
 
     @Column(name = "phone")
@@ -34,10 +34,13 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+
+
     @ManyToMany
     @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "name"))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
 

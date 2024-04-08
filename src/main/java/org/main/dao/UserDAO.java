@@ -6,10 +6,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.TypedQuery;
 
-import org.main.exception.NotAuthorizedException;
 import org.main.ressources.Role;
 import org.main.ressources.User;
-import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 
@@ -73,10 +71,15 @@ public class UserDAO  {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         User user = new User(name, email, password, phone);
-        Role userRole = em.find(Role.class, "user");
-        if (userRole == null) {
+        TypedQuery<Role> query = em.createQuery("SELECT r FROM Role r WHERE r.name = :name", Role.class);
+        query.setParameter("name", "user");
+        List<Role> roles = query.getResultList();
+        Role userRole;
+        if (roles.isEmpty()) {
             userRole = new Role("user");
             em.persist(userRole);
+        } else {
+            userRole = roles.get(0);
         }
         user.addRole(userRole);
         em.persist(user);
@@ -96,6 +99,12 @@ public class UserDAO  {
             throw new EntityNotFoundException("Wrong password");
         return user;
     }
+
+
+
+
+
+
 
     public void updatePassword(String email, String newPassword) {
         EntityManager em = getEntityManagerFactory().createEntityManager();

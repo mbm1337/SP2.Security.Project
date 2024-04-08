@@ -71,7 +71,7 @@ public class ApplicationConfig {
                 }
                 //it is hard to test method static
                 UserDTO user = ctx.attribute("user");
-                System.out.println("USER IN CHECK_SEC_ROLES: "+user);
+                System.out.println("USER IN CHECK_SEC_ROLES: "+user+ ", ROLES: " + user.getRoles());
                 if(user == null)
                     ctx.status(HttpStatus.FORBIDDEN)
                             .json(om.createObjectNode()
