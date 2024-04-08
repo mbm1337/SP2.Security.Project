@@ -1,6 +1,7 @@
 package org.main.routes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.javalin.apibuilder.EndpointGroup;
 import io.javalin.security.RouteRole;
 import jakarta.persistence.EntityManagerFactory;
@@ -20,11 +21,7 @@ public class Routes {
 
     private static SecurityHandler securityHandler = new SecurityHandler();
 
-    private static ObjectMapper jsonMapper;
 
-    public Routes(ObjectMapper objectMapper) {
-        this.jsonMapper = objectMapper;
-    }
 
     public static EndpointGroup getEventRoutes(EntityManagerFactory emf) {
 

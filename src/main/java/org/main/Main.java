@@ -1,7 +1,7 @@
 package org.main;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.persistence.EntityManagerFactory;
 import org.main.config.HibernateConfig;
 import org.main.config.ApplicationConfig;
@@ -17,9 +17,6 @@ public class Main {
     }
 
     public static void startServer(int port) {
-        ObjectMapper om = new ObjectMapper();
-        om.registerModule(new JavaTimeModule());
-        Routes routes = new Routes(om);
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         ApplicationConfig applicationConfig = ApplicationConfig.getInstance();
         applicationConfig
@@ -32,5 +29,6 @@ public class Main {
                 .setRoute(getUserRoutes(emf))
                 .setRoute(getEventRoutes(emf))
                 .setRoute(getRegistrationRoutes(emf));
+
     }
 }

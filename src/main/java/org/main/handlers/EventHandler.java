@@ -1,6 +1,7 @@
 package org.main.handlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.javalin.http.Handler;
 import io.javalin.http.HttpStatus;
 import org.main.dao.EventDAO;
@@ -18,6 +19,7 @@ public class EventHandler implements IHandler {
 
         public EventHandler(EventDAO eventDAO){
             this.eventDAO = eventDAO;
+            objectMapper.registerModule(new JavaTimeModule());
         }
 
     @Override
