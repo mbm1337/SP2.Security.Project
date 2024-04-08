@@ -26,9 +26,9 @@ public class Main {
                 .initiateServer()
                 .startServer(port)
                 .setExceptionHandling()
+                .checkSecurityRoles()
                 .setRoute(getSecurityRoutes())
                 //.setRoute(getSecuredRoutes())
-                .checkSecurityRoles()
                 .setRoute(getUserRoutes(emf))
                 .setRoute(getEventRoutes(emf))
                 .setRoute(getRegistrationRoutes(emf));

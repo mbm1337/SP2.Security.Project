@@ -7,8 +7,8 @@ POST http://localhost:7000/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "user2",
-  "email": "user2@email.dk",
+  "name": "user3",
+  "email": "user3@email.dk",
   "phone": "12345678",
   "password": "1234"
 }
@@ -17,7 +17,7 @@ POST http://localhost:7000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "user@email.dk",
+  "email": "user3@email.dk",
 "password": "1234"
 }
 ###
@@ -38,9 +38,9 @@ Content-Type: application/json
 ###get in with Json Web Token
 
 GET http://localhost:7000/api/registrations/
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidXNlckBlbWFpbC5kayIsImV4cCI6MTcxMjU0ODE1NywiZW1haWwiOiJ1c2VyQGVtYWlsLmRrIiwicm9sZXMiOiJ1c2VyIn0.sOGnKLkZiJm_mzVjJjTjhhs3_MKxHF-rbnHrDHodQlo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidXNlcjNAZW1haWwuZGsiLCJleHAiOjE3MTM1NDk2MzcsImVtYWlsIjoidXNlcjNAZW1haWwuZGsiLCJyb2xlcyI6InVzZXIifQ.DB-49sfHe9TLbb5fwYdSJU_Z2TN7XxPgjsDSZp6yKRc
 ###
 GET http://localhost:7000/api/users/user/user4@email.dk
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidXNlcjRAZW1haWwuZGsiLCJleHAiOjE3MTI1NDE3ODQsImVtYWlsIjoidXNlcjRAZW1haWwuZGsiLCJyb2xlcyI6InVzZXIifQ.g2mAThnuVNtAjvNuQ-toO2d6lqFDRlCcxiIqKrqdCqA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidXNlcjNAZW1haWwuZGsiLCJleHAiOjE3MTM1NDk1NjcsImVtYWlsIjoidXNlcjNAZW1haWwuZGsiLCJyb2xlcyI6InVzZXIifQ.Kpyf9Yd0QXmBAhsUczGkdEVIyrq8XPsSjJ6YrgB1ua0
 ###
 GET http://localhost:7000/api/users/

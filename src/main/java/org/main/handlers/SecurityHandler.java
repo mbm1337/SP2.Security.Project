@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public class SecurityHandler implements ISecurityHandler {
     UserDAO securityDAO = new UserDAO(HibernateConfig.getEntityManagerFactory());
     ObjectMapper objectMapper = new ObjectMapper();
-    private final String SECRET_KEY = "DetteErEnHemmeligNøgleTilAtDanneJWT_Tokensmed";
+    private final String SECRET_KEY = "HmKoMfLTh+58gS5g5l3nPFXa2TpDnXw4dIsN9f5gzq4=";
     @Override
     public Handler register() {
         return (ctx) -> {
@@ -127,7 +127,7 @@ public class SecurityHandler implements ISecurityHandler {
             SECRET_KEY = System.getenv("SECRET_KEY");
         } else {
             ISSUER = "Gruppe4";
-            TOKEN_EXPIRE_TIME = "1800000"; // 30 minutes in milliseconds
+            TOKEN_EXPIRE_TIME = "999999999"; // 30 minutes in milliseconds
             SECRET_KEY = Utils.getPropertyValue("SECRET_KEY","config.properties");
         }
         return TokenUtils.createToken(new UserDTO(user.getEmail(), user.getRoles()), ISSUER, TOKEN_EXPIRE_TIME, SECRET_KEY);

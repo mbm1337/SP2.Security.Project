@@ -46,7 +46,7 @@ public class ApplicationConfig {
 
     public ApplicationConfig setExceptionHandling(){
         app.exception(Exception.class, (e,ctx)->{
-            ObjectNode node = om.createObjectNode().put("errorMessage",e.getMessage());
+            ObjectNode node = om.createObjectNode().put("errrorMessage",e.getMessage());
             ctx.status(500).json(node);
         });
         return instance;
@@ -64,18 +64,18 @@ public class ApplicationConfig {
                 // permitted roles are defined in the last arg to routes: get("/", ctx -> ctx.result("Hello World"), Role.ANYONE);
 
                 Set<String> allowedRoles = permittedRoles.stream().map(role -> role.toString().toUpperCase()).collect(Collectors.toSet());
-                if(allowedRoles.contains("ANYONE") || ctx.method().toString().equals("OPTIONS")) {
+                if (allowedRoles.contains("ANYONE") || ctx.method().toString().equals("OPTIONS")) {
                     // Allow requests from anyone and OPTIONS requests (preflight in CORS)
                     handler.handle(ctx);
                     return;
                 }
-                //it is hard to test method static
+
                 UserDTO user = ctx.attribute("user");
-                System.out.println("USER IN CHECK_SEC_ROLES: "+user+ ", ROLES: " + user.getRoles());
-                if(user == null)
+                System.out.println("USER IN CHECK_SEC_ROLES: " + user);
+                if (user == null)
                     ctx.status(HttpStatus.FORBIDDEN)
                             .json(om.createObjectNode()
-                                    .put("msg","Not authorized. No email were added from the token"));
+                                    .put("msg", "Not authorized. No username were added from the token"));
 
                 if (securityHandler.authorize(user, allowedRoles))
                     handler.handle(ctx);

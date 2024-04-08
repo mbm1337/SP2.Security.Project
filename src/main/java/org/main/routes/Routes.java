@@ -70,7 +70,7 @@ public class Routes {
         RegistrationHandler registrationHandler = new RegistrationHandler(registrationDAO);
         return () -> {
             path("registrations", () -> {
-                get(RegistrationHandler.readAll(registrationDAO), Role.USER);
+                get(RegistrationHandler.readAll(registrationDAO), Role.user);
 
                 get("/id/{id}",RegistrationHandler.getById(registrationDAO), Role.ANYONE);
 
@@ -96,6 +96,6 @@ public class Routes {
         };
     }
 
-    public enum Role implements RouteRole { ANYONE, USER, ADMIN,admin }
+    public enum Role implements RouteRole { ANYONE, USER, ADMIN,admin,user }
 
 }
