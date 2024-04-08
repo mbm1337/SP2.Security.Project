@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.http.Handler;
 import io.javalin.http.HttpStatus;
 import org.main.dao.EventDAO;
+import org.main.dao.UserDAO;
 import org.main.ressources.Event;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EventHandler implements IHandler {
 
@@ -77,4 +79,12 @@ public class EventHandler implements IHandler {
         };
     }
 
+    public List<Event> filterEventByStatusAndCategory(String category, Event.Status status) {
+        List<Event> eventList = eventDAO.getAll();
+
+        return eventList.stream()
+                .filter(event -> event.getCategory().equals(category))
+                .filter(event -> event.getStatus().equals(status))
+                .collect(Collectors.toList());
+    }
 }
