@@ -4,7 +4,9 @@ package org.main.ressources;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,17 +26,19 @@ public class Event {
     @Column(name = "description")
     private String description;
     @Column(name = "date")
-    private LocalDateTime date;
+    private LocalDate date;
     @Column(name = "time")
-    private LocalDateTime time;
+    private LocalTime time;
     @Column(name = "duration")
-    private int duration;
+    private Integer duration;
     @Column(name = "capacity")
     private int capacity;
     @Column(name = "location")
     private String location;
     @Column(name = "image")
     private String image; // ???
+    @Column(name="category")
+    private String category;
     @Column(name = "status")
     private Status status;
     public enum Status {
@@ -47,16 +51,30 @@ public class Event {
     private LocalDateTime updatedAt;
     @Column(name = "deletedAt")
     private LocalDateTime deletedAt;
+    @PrePersist
+    private void onCreate() {
+        createdAt = LocalDateTime.now();
 
-    @ManyToMany(cascade = CascadeType.DETACH)
-    Set<User>users = new HashSet<>();
+    }
+    @PreUpdate
+    private void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
+    @PreRemove
+    private void onDelete() {
+        deletedAt = LocalDateTime.now();
+    }
 
     public Event(String description) {
         this.description = description;
     }
 
-    
+    public Event(String description, String category, Status status) {
+        this.description = description;
+        this.category = category;
+        this.status = status;
+    }
 }
 
 

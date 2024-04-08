@@ -13,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
+    private int id;
     private String name;
     private String email;
     private String phone;
@@ -20,13 +21,35 @@ public class UserDTO {
     private Set<String> roles;
 
     public UserDTO(User user){
+        if (user == null) {
+            System.out.println("User is null");
+        } else {
+            System.out.println("User is not null");
+        }
+        this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
         this.phone = user.getPhone();
+        this.password = user.getPassword();
         this.roles = user.getRolesAsStrings();
     }
+
     public UserDTO(String email, Set<String> rolesSet) {
         this.email = email;
         this.roles = rolesSet;
     }
+
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
+
+
 }

@@ -1,47 +1,33 @@
 package org.main.dao;
 
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.TypedQuery;
-import org.main.ressources.Role;
 
+import org.main.ressources.Role;
 import org.main.ressources.User;
 
 import java.util.List;
 
-public class UserDAO {
-    EntityManagerFactory emf;
-    public UserDAO(EntityManagerFactory _emf)
-    {
+import static org.main.config.HibernateConfig.getEntityManagerFactory;
+
+public class UserDAO  {
+    private EntityManagerFactory emf;
+    public UserDAO(EntityManagerFactory _emf) {
         this.emf = _emf;
     }
 
-    public User createUser(String name ,String email,String phone,String password) {
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        User user = new User(name,email,phone ,password);
-        Role userRole = em.find(Role.class, "user");
-        if (userRole == null) {
-            userRole = new Role("user");
-            em.persist(userRole);
+    public User create(User user) {
+        try (var em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            em.persist(user);
+            em.getTransaction().commit();
         }
-        user.addRole(userRole);
-        em.persist(user);
-        em.getTransaction().commit();
-        em.close();
         return user;
     }
-    public User verifyUser(String username, String password) throws EntityNotFoundException {
-        EntityManager em = emf.createEntityManager();
-        User user = em.find(User.class, username);//retrieve entity from DAtabase find is part from Hibernate framework
-        if (user == null)
-            throw new EntityNotFoundException("No user found with username: " + username);
-        if (!user.verifyUser(password))
-            throw new EntityNotFoundException("Wrong password");
-        return user;
-    }
-  
+
     public List<User> getAll() {
         try (var em = emf.createEntityManager()) {
             TypedQuery<User> q = em.createQuery("select u FROM User  u", User.class);
@@ -52,7 +38,7 @@ public class UserDAO {
         }
     }
 
-    public User getById(String email) {
+    public User getByEmail(String email) {
         try (var em = emf.createEntityManager()) {
             TypedQuery<User> q = em.createQuery("FROM User h WHERE h.email = :email", User.class);
             q.setParameter("email", email);
@@ -81,5 +67,64 @@ public class UserDAO {
     }
 
 
-
+    public User createUser(String name, String email, String password, String phone) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        User user = new User(name, email, password, phone);
+        TypedQuery<Role> query = em.createQuery("SELECT r FROM Role r WHERE r.name = :name", Role.class);
+        query.setParameter("name", "user");
+        List<Role> roles = query.getResultList();
+        Role userRole;
+        if (roles.isEmpty()) {
+            userRole = new Role("user");
+            em.persist(userRole);
+        } else {
+            userRole = roles.get(0);
+        }
+        user.addRole(userRole);
+        em.persist(user);
+        em.getTransaction().commit();
+        em.close();
+        return user;
     }
+
+    public User verifyUser(String email, String password) throws EntityNotFoundException {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<User> q = em.createQuery("FROM User u WHERE u.email = :email", User.class);
+        q.setParameter("email", email);
+        User user = q.getSingleResult();
+        if (user == null)
+            throw new EntityNotFoundException("No user found with email: " + email);
+        if (!user.verifyUser(password))
+            throw new EntityNotFoundException("Wrong password");
+        return user;
+    }
+
+
+
+
+
+
+
+    public void updatePassword(String email, String newPassword) {
+        EntityManager em = getEntityManagerFactory().createEntityManager();
+        try {
+            em.getTransaction().begin();
+            User user = em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+
+            user.updatePassword(newPassword);
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
+
+
+}

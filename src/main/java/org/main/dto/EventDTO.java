@@ -7,7 +7,9 @@ import lombok.Setter;
 import org.main.ressources.Event;
 import org.main.ressources.User;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Set;
 
 @Getter
@@ -17,8 +19,8 @@ import java.util.Set;
 public class EventDTO {
     private String title;
     private String description;
-    private LocalDateTime date;
-    private LocalDateTime time;
+    private LocalDate date;
+    private LocalTime time;
     private int duration;
     private int capacity;
     private String location;
@@ -44,7 +46,7 @@ public class EventDTO {
         this.createdAt = event.getCreatedAt();
         this.updatedAt = event.getUpdatedAt();
         this.deletedAt = event.getDeletedAt();
-        this.registeredUsers = event.getUsers();
+        //this.registeredUsers = event.getUsers();
     }
 
 

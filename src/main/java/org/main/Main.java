@@ -1,34 +1,36 @@
 package org.main;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import jakarta.persistence.EntityManagerFactory;
 import org.main.config.HibernateConfig;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.main.config.ApplicationConfig;
+import org.main.routes.Routes;
 
-import static org.main.routes.Routes.getEventRoutes;
-import static org.main.routes.Routes.getUserRoutes;
+import static org.main.routes.Routes.*;
 
 public class Main {
 
 
     public static void main(String[] args) {
-
-
         Main.startServer(7000);
-
     }
 
     public static void startServer(int port) {
         ObjectMapper om = new ObjectMapper();
-        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryConfig();
+        om.registerModule(new JavaTimeModule());
+        Routes routes = new Routes(om);
+        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         ApplicationConfig applicationConfig = ApplicationConfig.getInstance();
         applicationConfig
                 .initiateServer()
                 .startServer(port)
                 .setExceptionHandling()
+                .checkSecurityRoles()
+                .setRoute(getSecurityRoutes())
+                //.setRoute(getSecuredRoutes())
                 .setRoute(getUserRoutes(emf))
-                .setRoute(getEventRoutes(emf));
-
-
+                .setRoute(getEventRoutes(emf))
+                .setRoute(getRegistrationRoutes(emf));
     }
 }

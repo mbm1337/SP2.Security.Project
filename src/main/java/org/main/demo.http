@@ -1,2 +1,46 @@
 GET http://localhost:7000/api/users
 ###
+
+GET http://localhost:7000/api/registrations/id/1
+### log in
+POST http://localhost:7000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "user3",
+  "email": "user3@email.dk",
+  "phone": "12345678",
+  "password": "1234"
+}
+###
+POST http://localhost:7000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "user3@email.dk",
+"password": "1234"
+}
+###
+POST http://localhost:7000/api/events
+Content-Type: application/json
+
+{
+  "title": "Event1",
+  "description": "This is event 1",
+  "date": "2024-01-02",
+  "time": "10:00:00",
+  "duration": "120",
+  "capacity": "100",
+  "location": "Location 1",
+  "image": "image1.png",
+  "status": "ACTIVE"
+}
+###get in with Json Web Token
+
+GET http://localhost:7000/api/registrations/
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidXNlcjNAZW1haWwuZGsiLCJleHAiOjE3MTM1NDk2MzcsImVtYWlsIjoidXNlcjNAZW1haWwuZGsiLCJyb2xlcyI6InVzZXIifQ.DB-49sfHe9TLbb5fwYdSJU_Z2TN7XxPgjsDSZp6yKRc
+###
+GET http://localhost:7000/api/users/user/user4@email.dk
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidXNlcjNAZW1haWwuZGsiLCJleHAiOjE3MTM1NDk1NjcsImVtYWlsIjoidXNlcjNAZW1haWwuZGsiLCJyb2xlcyI6InVzZXIifQ.Kpyf9Yd0QXmBAhsUczGkdEVIyrq8XPsSjJ6YrgB1ua0
+###
+GET http://localhost:7000/api/users/
