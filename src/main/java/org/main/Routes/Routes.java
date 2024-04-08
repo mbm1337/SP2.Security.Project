@@ -20,7 +20,11 @@ public class Routes {
 
     private static SecurityHandler securityHandler = new SecurityHandler();
 
-    private static final ObjectMapper jsonMapper = new ObjectMapper();
+    private static ObjectMapper jsonMapper;
+
+    public Routes(ObjectMapper objectMapper) {
+        this.jsonMapper = objectMapper;
+    }
 
     public static EndpointGroup getEventRoutes(EntityManagerFactory emf) {
 
@@ -30,7 +34,7 @@ public class Routes {
             path("events", () -> {
                 get("/", eventHandler.getAll());
                 get("/{id}", eventHandler.getById());
-                post("/", eventHandler.create());
+                post("/", eventHandler.create(), Role.ANYONE);
                 put("/{id}", eventHandler.update());
                 delete("/{id}", eventHandler.delete());
 
@@ -48,7 +52,7 @@ public class Routes {
 
                 post("/user",userHandler.create());
 
-                path("/user/{id}", () -> {
+                path("/user/{email}", () -> {
                     get(userHandler.getByEmail());
 
                     put(userHandler.update());
@@ -66,7 +70,7 @@ public class Routes {
         RegistrationHandler registrationHandler = new RegistrationHandler(registrationDAO);
         return () -> {
             path("registrations", () -> {
-                get(RegistrationHandler.readAll(registrationDAO), Role.ANYONE);
+                get(RegistrationHandler.readAll(registrationDAO), Role.user);
 
                 get("/id/{id}",RegistrationHandler.getById(registrationDAO), Role.ANYONE);
 
@@ -91,15 +95,7 @@ public class Routes {
             });
         };
     }
-    public static EndpointGroup getSecuredRoutes(){
-        return ()->{
-            path("/protected", ()->{
-                before(securityHandler.authenticate());
-                get("/user_demo",(ctx)->ctx.json(jsonMapper.createObjectNode().put("msg",  "Hello from USER Protected")),Role.USER);
-                get("/admin_demo",(ctx)->ctx.json(jsonMapper.createObjectNode().put("msg",  "Hello from ADMIN Protected")),Role.ADMIN);
-            });
-        };
-    }
-    public enum Role implements RouteRole { ANYONE, USER, ADMIN }
+
+    public enum Role implements RouteRole { ANYONE, USER, ADMIN,admin,user }
 
 }
