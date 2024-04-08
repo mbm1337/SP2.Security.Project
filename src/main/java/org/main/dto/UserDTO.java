@@ -13,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
+    private int id;
     private String name;
     private String email;
     private String phone;
@@ -21,6 +22,7 @@ public class UserDTO {
 
     public UserDTO(User user){
         this.email = user.getEmail();
+        this.id = user.getId();
         this.password = user.getPassword();
         this.roles = user.getRolesAsStrings();
     }
@@ -28,5 +30,7 @@ public class UserDTO {
         this.email = email;
         this.roles = rolesSet;
     }
+
+
 
 }

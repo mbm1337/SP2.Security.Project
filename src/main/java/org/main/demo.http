@@ -7,8 +7,8 @@ POST http://localhost:7000/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "user1",
-  "email": "user@email.dk",
+  "name": "user4",
+  "email": "user4@email.dk",
   "phone": "12345678",
   "password": "1234"
 }
@@ -17,7 +17,7 @@ POST http://localhost:7000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "user@email.dk",
+  "email": "user5@email.dk",
 "password": "1234"
 }
 ### get in with Json Web Token
@@ -38,3 +38,7 @@ Content-Type: application/json
   "image": "image1.png",
   "status": "ACTIVE"
 }
+###
+
+GET http://localhost:7000/api/registrations/
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidXNlcjVAZW1haWwuZGsiLCJleHAiOjE3MTI1MzkwODksImVtYWlsIjoidXNlcjVAZW1haWwuZGsiLCJyb2xlcyI6IkFETUlOIn0.n2-S8HaS2013qxYaA3vTrqMfB1V_EJh24HOjN1z3tEQ

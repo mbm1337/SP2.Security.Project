@@ -37,7 +37,7 @@ public class UserHandler {
     public Handler getByEmail(){
         return ctx -> {
             String email  = (ctx.pathParam("email"));
-            User user = userDao.getById(email);
+            User user = userDao.getByEmail(email);
             if (user == null) {
                 throw new ApiException( 404, "User not found");
             }
@@ -61,7 +61,7 @@ public class UserHandler {
     public Handler delete() {
         return ctx -> {
             String email =ctx.pathParam("email");
-            User user = userDao.getById(email);
+            User user = userDao.getByEmail(email);
             if (user == null) {
                 throw new ApiException(404, "User not found");
             }

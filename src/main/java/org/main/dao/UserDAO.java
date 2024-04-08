@@ -29,7 +29,7 @@ public class UserDAO  {
         }
         return user;
     }
-  
+
     public List<User> getAll() {
         try (var em = emf.createEntityManager()) {
             TypedQuery<User> q = em.createQuery("select u FROM User  u", User.class);
@@ -40,7 +40,7 @@ public class UserDAO  {
         }
     }
 
-    public User getById(String email) {
+    public User getByEmail(String email) {
         try (var em = emf.createEntityManager()) {
             TypedQuery<User> q = em.createQuery("FROM User h WHERE h.email = :email", User.class);
             q.setParameter("email", email);
@@ -87,7 +87,9 @@ public class UserDAO  {
 
     public User verifyUser(String email, String password) throws EntityNotFoundException {
         EntityManager em = emf.createEntityManager();
-        User user = em.find(User.class, email);
+        TypedQuery<User> q = em.createQuery("FROM User u WHERE u.email = :email", User.class);
+        q.setParameter("email", email);
+        User user = q.getSingleResult();
         if (user == null)
             throw new EntityNotFoundException("No user found with email: " + email);
         if (!user.verifyUser(password))
