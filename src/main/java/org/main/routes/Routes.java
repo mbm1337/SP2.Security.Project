@@ -79,6 +79,7 @@ public class Routes {
                 post("/{id}", RegistrationHandler.registerUserForEvent(registrationDAO, eventDAO, userDAO), Role.ADMIN,Role.USER); // Update this line
                 delete("/{id}", RegistrationHandler.cancelUserRegistration(registrationDAO), Role.USER,Role.ADMIN);
 
+
             });
         };
     }
