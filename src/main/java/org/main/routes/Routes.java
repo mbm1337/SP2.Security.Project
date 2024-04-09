@@ -45,13 +45,12 @@ public class Routes {
         UserHandler userHandler = new UserHandler(userDAO);
         return () -> {
             path("users", () -> {
-
-                get(userHandler.getAllUsers(), Role.ANYONE);
+                get(userHandler.getAllUsers());
 
                 post("/user",userHandler.create());
 
                 path("/user/{email}", () -> {
-                    get(userHandler.getByEmail(),Role.ANYONE);
+                    get(userHandler.getByEmail());
 
                     put(userHandler.update());
 
