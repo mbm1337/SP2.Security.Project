@@ -31,3 +31,32 @@ POST /auth/login: Logs in a user.
 POST /auth/register: Registers a new user.  
 POST /auth/reset-password: Resets a user's password.  
 POST /auth/logout: Logs out a user.
+
+
+
+    ANYONE:
+        Functions:
+            Log in (post("/login"))
+            Register (post("/register"))
+            Reset password (post("/reset-password"))
+            Log out (post("/logout"))
+
+    USER:
+        Functions:
+            Read all users (get(userHandler.getAllUsers()))
+            Read user by email (get(userHandler.getByEmail()))
+            Update user (put(userHandler.update()))
+            Delete user (delete(userHandler.delete()))
+            Read all events (get("/", eventHandler.getAll()))
+            Read specific event by ID (get("/{id}", eventHandler.getById()))
+            Register user for event (post("/{id}", RegistrationHandler.registerUserForEvent()))
+            Cancel user registration for event (delete("/{id}", RegistrationHandler.cancelUserRegistration()))
+
+    ADMIN:
+        Functions:
+            Create event (post("/"))
+            Update event (put("/{id}"))
+            Delete event (delete("/{id}"))
+            Register user for event (post("/{id}", RegistrationHandler.registerUserForEvent()))
+            Cancel user registration for event (delete("/{id}", RegistrationHandler.cancelUserRegistration()))
+            Log out (post("/logout"))
