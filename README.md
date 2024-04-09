@@ -12,6 +12,10 @@ ERD:
 ![ERD](images/eerd.png)
 
 
+all funtions are tested with http request and the tests are in the demo.http
+
+most of the functions are tested and working as intended, but there are some issues with the update functions on user, that we are still working on.
+
 
 GET /events: Retrieves all events.  
 GET /events/{id}: Retrieves the event with the specified ID.  
