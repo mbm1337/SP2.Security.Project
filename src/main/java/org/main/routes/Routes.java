@@ -29,11 +29,12 @@ public class Routes {
         EventHandler eventHandler = new EventHandler(eventDAO);
         return () -> {
             path("events", () -> {
-                get("/", eventHandler.getAll());
-                get("/{id}", eventHandler.getById());
-                post("/", eventHandler.create(), Role.ANYONE);
-                put("/{id}", eventHandler.update());
-                delete("/{id}", eventHandler.delete());
+                before(securityHandler.authenticate());
+                get("/", eventHandler.getAll(),Role.USER,Role.ADMIN);
+                get("/{id}", eventHandler.getById(),Role.USER,Role.ADMIN);
+                post("/", eventHandler.create(), Role.ADMIN);
+                put("/{id}", eventHandler.update(), Role.ADMIN);
+                delete("/{id}", eventHandler.delete(), Role.ADMIN);
 
             });
         };
@@ -45,16 +46,17 @@ public class Routes {
         UserHandler userHandler = new UserHandler(userDAO);
         return () -> {
             path("users", () -> {
-                get(userHandler.getAllUsers());
+                before(securityHandler.authenticate());
+                get(userHandler.getAllUsers(),Role.ADMIN);
 
-                post("/user",userHandler.create());
+                post("/user",userHandler.create(),Role.ANYONE);
 
                 path("/user/{email}", () -> {
-                    get(userHandler.getByEmail());
+                    get(userHandler.getByEmail(),Role.USER,Role.ADMIN);
 
-                    put(userHandler.update());
+                    put(userHandler.update(),Role.USER);
 
-                    delete(userHandler.delete());
+                    delete(userHandler.delete(),Role.USER,Role.ADMIN);
                 });
             });
         };
@@ -68,12 +70,14 @@ public class Routes {
         UserDAO userDAO = new UserDAO(emf); // Add this line
         return () -> {
             path("registrations", () -> {
+                before(securityHandler.authenticate());
+
                 get(RegistrationHandler.readAll(registrationDAO), Role.ANYONE);
 
                 get("/id/{id}",RegistrationHandler.getRegistrationsByEventId(registrationDAO), Role.ANYONE);
 
-                post("/{id}", RegistrationHandler.registerUserForEvent(registrationDAO, eventDAO, userDAO), Role.ANYONE); // Update this line
-                delete("/{id}", RegistrationHandler.cancelUserRegistration(registrationDAO), Role.ANYONE);
+                post("/{id}", RegistrationHandler.registerUserForEvent(registrationDAO, eventDAO, userDAO), Role.ADMIN,Role.USER); // Update this line
+                delete("/{id}", RegistrationHandler.cancelUserRegistration(registrationDAO), Role.USER,Role.ADMIN);
 
             });
         };
@@ -91,6 +95,6 @@ public class Routes {
         };
     }
 
-    public enum Role implements RouteRole { ANYONE, USER, ADMIN,admin,user }
+    public enum Role implements RouteRole { ANYONE, USER, ADMIN}
 
 }
