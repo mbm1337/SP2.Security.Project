@@ -1,4 +1,5 @@
 GET http://localhost:7000/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidXNlcjNAZW1haWwuZGsiLCJleHAiOjE3MTM2MjM4MDYsImVtYWlsIjoidXNlcjNAZW1haWwuZGsiLCJyb2xlcyI6InVzZXIifQ.0N96qzL40B3LWHxbNGq5ix1ZIhu-7_bUYHuZsQMC8Wg
 ###
 
 GET http://localhost:7000/api/registrations/id/1

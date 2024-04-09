@@ -45,7 +45,9 @@ public class Routes {
         UserHandler userHandler = new UserHandler(userDAO);
         return () -> {
             path("users", () -> {
-                get(userHandler.getAllUsers());
+                before(securityHandler.authenticate());
+
+                get(userHandler.getAllUsers(),Role.USER);
 
                 post("/user",userHandler.create());
 
