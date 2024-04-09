@@ -48,12 +48,13 @@ public class UserDAO  {
     }
 
     public User update(User user) {
+        User updatedUser;
         try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            em.merge(user);
+            updatedUser = em.merge(user);
             em.getTransaction().commit();
         }
-        return user;
+        return updatedUser;
     }
     public void delete(User user) {
         try (var em = emf.createEntityManager()) {

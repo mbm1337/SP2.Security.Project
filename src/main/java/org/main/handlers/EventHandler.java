@@ -73,11 +73,18 @@ public class EventHandler implements IHandler {
     @Override
     public Handler update() {
         return ctx -> {
-            Event event = ctx.bodyAsClass(Event.class);
-            event = eventDAO.update(event);
-
-            String json = objectMapper.writeValueAsString(event);
-            ctx.status(200).json(json);
+            int id = Integer.parseInt(ctx.pathParam("id"));
+            Event eventDetails = ctx.bodyAsClass(Event.class);
+            Event existingEvent = eventDAO.getById(id);
+            if (existingEvent == null) {
+                ctx.status(404).result("Event not found");
+            } else {
+                existingEvent.setTitle(eventDetails.getTitle());
+                existingEvent.setDescription(eventDetails.getDescription());
+                // update other fields...
+                Event updatedEvent = eventDAO.update(existingEvent);
+                ctx.json(updatedEvent);
+            }
         };
     }
 

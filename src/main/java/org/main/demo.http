@@ -24,10 +24,25 @@ POST http://localhost:7000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "admin@email.dk",
+  "email": "user42@email.dk",
 "password": "1234"
 }
 
+
+### Update a user
+PUT http://localhost:7000/api/users/user/user42@email.dk
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidXNlcjQyQGVtYWlsLmRrIiwiZXhwIjoxNzEzNjI4OTExLCJlbWFpbCI6InVzZXI0MkBlbWFpbC5kayIsInJvbGVzIjoidXNlciJ9.ccuvVURbCTS_H0KJ_oLPOGdPGkm2MbfKJdQ_g8OZ8LY
+
+{
+  "name": "Updated User",
+  "email": "user42@email.dk",
+  "phone": "98765432"
+}
+
+### Delete a user
+DELETE http://localhost:7000/api/users/user/asd@asd.asd
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoiYWRtaW5AZW1haWwuZGsiLCJleHAiOjE3MTM2Mjg3NTYsImVtYWlsIjoiYWRtaW5AZW1haWwuZGsiLCJyb2xlcyI6ImFkbWluIn0._oqn-JXxODA4H252soJEMCW2ME20tvklQGgEWSg9KZo
 
 ####################################################################################
 ###event test
@@ -50,7 +65,34 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoiYWRta
   "status": "ACTIVE"
 }
 
+### Get all events
+GET http://localhost:7000/api/events
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoiYWRtaW5AZW1haWwuZGsiLCJleHAiOjE3MTM2MjY1NDUsImVtYWlsIjoiYWRtaW5AZW1haWwuZGsiLCJyb2xlcyI6ImFkbWluIn0.AzoWFQzuOY94VtD30QDhAdZrmnf3YdwW3qu0FszbwPw
 
+### Get a single event
+GET http://localhost:7000/api/events/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoiYWRtaW5AZW1haWwuZGsiLCJleHAiOjE3MTM2MjY1NDUsImVtYWlsIjoiYWRtaW5AZW1haWwuZGsiLCJyb2xlcyI6ImFkbWluIn0.AzoWFQzuOY94VtD30QDhAdZrmnf3YdwW3qu0FszbwPw
+
+### Update an event
+PUT http://localhost:7000/api/events/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoiYWRtaW5AZW1haWwuZGsiLCJleHAiOjE3MTM2MjY1NDUsImVtYWlsIjoiYWRtaW5AZW1haWwuZGsiLCJyb2xlcyI6ImFkbWluIn0.AzoWFQzuOY94VtD30QDhAdZrmnf3YdwW3qu0FszbwPw
+
+{
+  "title": "Updated Event",
+  "description": "This is an updated event",
+  "date": "2024-01-02",
+  "time": "10:00:00",
+  "duration": "120",
+  "capacity": "100",
+  "location": "Updated Location",
+  "image": "updated_image.png",
+  "status": "ACTIVE"
+}
+
+### Delete an event
+DELETE http://localhost:7000/api/events/15
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoiYWRtaW5AZW1haWwuZGsiLCJleHAiOjE3MTM2MjY1NDUsImVtYWlsIjoiYWRtaW5AZW1haWwuZGsiLCJyb2xlcyI6ImFkbWluIn0.AzoWFQzuOY94VtD30QDhAdZrmnf3YdwW3qu0FszbwPw
 ####################################################################################
 ###registrations test
 

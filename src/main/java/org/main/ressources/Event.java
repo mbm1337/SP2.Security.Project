@@ -75,6 +75,7 @@ public class Event {
         this.category = category;
         this.status = status;
     }
+
 }
 
 

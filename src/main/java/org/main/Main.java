@@ -25,7 +25,6 @@ public class Main {
                 .setExceptionHandling()
                 .checkSecurityRoles()
                 .setRoute(getSecurityRoutes())
-                //.setRoute(getSecuredRoutes())
                 .setRoute(getUserRoutes(emf))
                 .setRoute(getEventRoutes(emf))
                 .setRoute(getRegistrationRoutes(emf));
