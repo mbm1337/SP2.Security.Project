@@ -117,6 +117,7 @@ GET http://localhost:7000/api/registrations/
 ### vi giver event id 1 til user id 3 så event id i link og user id i body
 POST http://localhost:7000/api/registrations/8
 Content-Type: text/plain
+
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoiYWRtaW5AZW1haWwuZGsiLCJleHAiOjE3MTM2MjU2NzUsImVtYWlsIjoiYWRtaW5AZW1haWwuZGsiLCJyb2xlcyI6ImFkbWluIn0.WY7_XxF-KP-KqEbfCwHzeMUqKXL0h0pdihN41BDer9E
 
 6
