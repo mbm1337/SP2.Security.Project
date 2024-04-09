@@ -1,6 +1,21 @@
 ####################################################################################
 ###user test
 
+###logud
+POST http://localhost:7000/api/auth/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidXNlcjQyQGVtYWlsLmRrIiwiZXhwIjoxNzEzNjI5NjE4LCJlbWFpbCI6InVzZXI0MkBlbWFpbC5kayIsInJvbGVzIjoidXNlciJ9.5dBO_C5ilwEExgdbkZhLhYLTyjsV1yXzDvSUXk0VaHc
+
+
+### rest password
+POST http://localhost:7000/api/auth/reset-password
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidXNlcjQyQGVtYWlsLmRrIiwiZXhwIjoxNzEzNjI5OTIzLCJlbWFpbCI6InVzZXI0MkBlbWFpbC5kayIsInJvbGVzIjoidXNlciJ9.QQt4Evrq9t1-_AIM_1GM_9Xgb6FEXOXISzeqDMD_U2s
+
+{
+"newPassword":"1234"
+}
+
+
 ###user med email som id test
 GET http://localhost:7000/api/users/user/user4@email.dk
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoiYWRtaW5AZW1haWwuZGsiLCJleHAiOjE3MTM2MjU2NzUsImVtYWlsIjoiYWRtaW5AZW1haWwuZGsiLCJyb2xlcyI6ImFkbWluIn0.WY7_XxF-KP-KqEbfCwHzeMUqKXL0h0pdihN41BDer9E

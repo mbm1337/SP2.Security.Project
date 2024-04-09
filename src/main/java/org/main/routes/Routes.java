@@ -89,7 +89,7 @@ public class Routes {
                 post("/login", securityHandler.login(),Role.ANYONE);
                 post("/register", securityHandler.register(),Role.ANYONE);
                 before(securityHandler.authenticate());
-                post("/reset-password", securityHandler.resetPassword(), Role.USER, Role.ADMIN);
+                post("/reset-password", securityHandler.resetPassword(), Role.ANYONE);
                 post("/logout", securityHandler.logout(), Role.USER, Role.ADMIN);
             });
         };
