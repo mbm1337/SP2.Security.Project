@@ -3,8 +3,8 @@ POST http://localhost:7000/api/auth/register
 {
 "name": "test2",
 "email": "test2@gmail.com",
-"password": "test123",
-"phone": "00000000"
+"phone": "00000000",
+"password": "test123"
 }
 
 ###
@@ -26,4 +26,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaG9tYXMgSGFydG1hbm4iLCJzd
 
 ###
 POST http://localhost:7000/api/auth/logout
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaG9tYXMgSGFydG1hbm4iLCJzdWIiOiJ0ZXN0MkBnbWFpbC5jb20iLCJleHAiOjE3MTI0NDUzMTgsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwicm9sZXMiOiJ1c2VyIn0.Rr0Nmk3yub2eZtfzsUqdGGit4bylZcTmQXmSt3ZIljE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHcnVwcGU0Iiwic3ViIjoidGVzdDJAZ21haWwuY29tIiwiZXhwIjoxNzEzNjIyMjczLCJlbWFpbCI6InRlc3QyQGdtYWlsLmNvbSIsInJvbGVzIjoidXNlciJ9.JOoKE5ts2t4R5Whl177XqhDwG6XTRjcO5mXYlpez2xU

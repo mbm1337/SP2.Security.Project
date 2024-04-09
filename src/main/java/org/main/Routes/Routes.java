@@ -68,12 +68,13 @@ public class Routes {
         UserDAO userDAO = new UserDAO(emf); // Add this line
         return () -> {
             path("registrations", () -> {
-                get(RegistrationHandler.readAll(registrationDAO), Role.ANYONE);
+                before(securityHandler.authenticate());
+                get(RegistrationHandler.readAll(registrationDAO), Role.USER);
 
-                get("/id/{id}",RegistrationHandler.getRegistrationsByEventId(registrationDAO), Role.ANYONE);
+                get("/id/{id}",RegistrationHandler.getRegistrationsByEventId(registrationDAO), Role.USER);
 
-                post("/{id}", RegistrationHandler.registerUserForEvent(registrationDAO, eventDAO, userDAO), Role.ANYONE); // Update this line
-                delete("/{id}", RegistrationHandler.cancelUserRegistration(registrationDAO), Role.ANYONE);
+                post("/{id}", RegistrationHandler.registerUserForEvent(registrationDAO, eventDAO, userDAO), Role.USER); // Update this line
+                delete("/{id}", RegistrationHandler.cancelUserRegistration(registrationDAO), Role.USER);
 
             });
         };
@@ -91,6 +92,6 @@ public class Routes {
         };
     }
 
-    public enum Role implements RouteRole { ANYONE, USER, ADMIN,admin,user }
+    public enum Role implements RouteRole { ANYONE, USER, ADMIN }
 
 }
