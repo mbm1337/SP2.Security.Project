@@ -25,7 +25,6 @@ public class User {
     @Column(name = "name")
     private String name;
 
-
     @Column(name = "email" ,unique = true)
     private String email;
 
@@ -34,8 +33,6 @@ public class User {
 
     @Column(name = "password")
     private String password;
-
-
 
     @ManyToMany
     @JoinTable(name = "user_roles",
@@ -85,28 +82,6 @@ public class User {
         this.password = BCrypt.hashpw(newPassword, salt);
     }
 
-
-
-//    public void addEvent(Event event) {
-//        registeredEvents.add(event);
-//        event.getUsers().add(this );
-//
-//    }
-//    public void removeEvent(Event event) {
-//        registeredEvents.remove(event);
-//        event.getUsers().remove(this);
-//
-//    }
-//    public Set<String> getEventsAsStrings() {
-//        if (registeredEvents.isEmpty()) {
-//            return Collections.emptySet();
-//        }
-//        Set<String> eventsAsStrings = new HashSet<>();
-//        registeredEvents.forEach((event) -> {
-//            eventsAsStrings.add(event.getDescription());
-//        });
-//        return eventsAsStrings;
-//    }
 
 }
 

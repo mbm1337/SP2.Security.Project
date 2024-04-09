@@ -30,10 +30,8 @@ public class UserDAO  {
 
     public List<User> getAll() {
         try (var em = emf.createEntityManager()) {
-            TypedQuery<User> q = em.createQuery("select u FROM User  u", User.class);
+            TypedQuery<User> q = em.createQuery("SELECT u FROM User u JOIN FETCH u.roles r JOIN FETCH r.users", User.class);
             List<User> users = q.getResultList();
-
-
             return users;
         }
     }

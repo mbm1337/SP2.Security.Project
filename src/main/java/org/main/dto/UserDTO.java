@@ -21,11 +21,6 @@ public class UserDTO {
     private Set<String> roles;
 
     public UserDTO(User user){
-        if (user == null) {
-            System.out.println("User is null");
-        } else {
-            System.out.println("User is not null");
-        }
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
