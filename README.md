@@ -37,7 +37,7 @@ POST /auth/reset-password: Resets a user's password.
 POST /auth/logout: Logs out a user.
 
 
-
+# Security roles and functions for each role
     ANYONE:
         Functions:
             Log in (post("/login"))
