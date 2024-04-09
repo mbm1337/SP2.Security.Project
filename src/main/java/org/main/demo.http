@@ -25,8 +25,8 @@ POST http://localhost:7000/api/events
 Content-Type: application/json
 
 {
-  "title": "Event1",
-  "description": "This is event 1",
+  "title": "Event2",
+  "description": "This is event 2",
   "date": "2024-01-02",
   "time": "10:00:00",
   "duration": "120",
@@ -38,12 +38,12 @@ Content-Type: application/json
 ###alle registeringer
 GET http://localhost:7000/api/registrations/
 
-### vi giver user id 1 til event id 3 så user id i link og event id i body
-POST http://localhost:7000/api/registrations/2
+### vi giver event id 1 til user id 3 så event id i link og user id i body
+POST http://localhost:7000/api/registrations/8
 Content-Type: text/plain
 
-3
 
+6
 ### se kun bruger registering ud fra id
 GET http://localhost:7000/api/registrations/id/2
 
