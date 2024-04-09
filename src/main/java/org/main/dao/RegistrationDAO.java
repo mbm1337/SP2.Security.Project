@@ -12,7 +12,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
 import org.main.ressources.Registration;
 import org.main.ressources.User;
-
+import org.main.ressources.Event;
 import java.util.List;
 
 public class RegistrationDAO {
@@ -56,6 +56,39 @@ public class RegistrationDAO {
             TypedQuery<Registration> q = em.createQuery("Select r From Registration r WHERE r.id = :id", Registration.class);
             q.setParameter("id", id);
             return q.getSingleResult();
+        }
+    }
+
+    public List<Registration> getByEventId(int eventId) {
+        try (EntityManager em = emf.createEntityManager()) {
+            TypedQuery<Registration> query = em.createQuery("SELECT r From Registration r WHERE r.event.id = :eventId", Registration.class);
+            query.setParameter("eventId", eventId);
+            return query.getResultList();
+        }
+    }
+
+    public Registration registerUserForEvent(User user, Event event) {
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            Registration registration = new Registration();
+            registration.setUser(user);
+            registration.setEvent(event);
+            em.persist(registration);
+            em.getTransaction().commit();
+            return registration;
+        }
+    }
+
+    public boolean cancelRegistration(int registrationId) {
+        try (EntityManager em = emf.createEntityManager()) {
+            Registration registration = em.find(Registration.class, registrationId);
+            if (registration != null) {
+                em.getTransaction().begin();
+                em.remove(registration);
+                em.getTransaction().commit();
+                return true;
+            }
+            return false;
         }
     }
 }

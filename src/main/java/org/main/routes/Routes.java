@@ -64,19 +64,17 @@ public class Routes {
     public static EndpointGroup getRegistrationRoutes(EntityManagerFactory emf) {
 
         RegistrationDAO registrationDAO = new RegistrationDAO(emf);
-        RegistrationHandler registrationHandler = new RegistrationHandler(registrationDAO);
+        EventDAO eventDAO = new EventDAO(emf);
+        UserDAO userDAO = new UserDAO(emf); // Add this line
         return () -> {
             path("registrations", () -> {
-                get(RegistrationHandler.readAll(registrationDAO), Role.user);
+                get(RegistrationHandler.readAll(registrationDAO), Role.ANYONE);
 
-                get("/id/{id}",RegistrationHandler.getById(registrationDAO), Role.ANYONE);
+                get("/id/{id}",RegistrationHandler.getRegistrationsByEventId(registrationDAO), Role.ANYONE);
 
-                post("/{id}", ctx ->{}, Role.ANYONE);
-                delete("/{id}", ctx ->{}, Role.ANYONE);
+                post("/{id}", RegistrationHandler.registerUserForEvent(registrationDAO, eventDAO, userDAO), Role.ANYONE); // Update this line
+                delete("/{id}", RegistrationHandler.cancelUserRegistration(registrationDAO), Role.ANYONE);
 
-            });
-            path("registration", () -> {
-                get("/{id}", ctx ->{}, Role.ANYONE);
             });
         };
     }

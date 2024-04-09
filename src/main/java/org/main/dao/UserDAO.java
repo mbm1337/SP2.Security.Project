@@ -65,7 +65,13 @@ public class UserDAO  {
             em.getTransaction().commit();
         }
     }
-
+    public User getById(int id) {
+        try (var em = emf.createEntityManager()) {
+            return em.find(User.class, id);
+        } catch (Exception e) {
+            throw new EntityNotFoundException("No user found with ID: " + id);
+        }
+    }
 
     public User createUser(String name, String email, String password, String phone) {
         EntityManager em = emf.createEntityManager();
