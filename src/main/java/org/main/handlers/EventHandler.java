@@ -96,4 +96,7 @@ public class EventHandler implements IHandler {
                 .filter(event -> event.getStatus().equals(status))
                 .collect(Collectors.toList());
     }
+
+
+
 }

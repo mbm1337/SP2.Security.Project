@@ -27,7 +27,6 @@ public class UserHandler {
             List<User> users = userDao.getAll();
             if (users.isEmpty()) {
                 throw new ApiException(404, "users are not found ");
-
             } else {
 
                 ctx.status(200).json(users);

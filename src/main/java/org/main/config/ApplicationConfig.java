@@ -14,9 +14,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class ApplicationConfig {
+
+
+    //Objectmapper jacksom that write first  a java object and serialize using write values as srorng
     ObjectMapper om = new ObjectMapper();
     ISecurityHandler securityHandler = new SecurityHandler();
     private Javalin app;
+    //instance means creating one instance through out the application so it cant b
     private static ApplicationConfig instance;
     private ApplicationConfig(){}
     public static ApplicationConfig getInstance(){
